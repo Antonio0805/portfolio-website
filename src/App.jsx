@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "./components/ Navbar";
 import { content } from "./content";
@@ -12,6 +12,7 @@ import EducationPage from "./pages/EducationPage";
 import ContactPage from "./pages/ContactPage";
 
 export default function App() {
+  const location = useLocation();
   const [language, setLanguage] = useState(() => {
     const savedLanguage = localStorage.getItem("cv-language");
     return savedLanguage === "ro" || savedLanguage === "en" ? savedLanguage : "en";
@@ -20,6 +21,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("cv-language", language);
   }, [language]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   const texts = content[language];
 
