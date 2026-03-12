@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Home({ text }) {
   return (
     <main className="container">
@@ -19,8 +21,8 @@ export default function Home({ text }) {
             </div>
 
             <div className="ctaRow">
-              <a className="btn primary" href="/projects">{text.ctaProjects}</a>
-              <a className="btn ghost" href="/contact">{text.ctaContact}</a>
+              <Link className="btn primary" to="/projects">{text.ctaProjects}</Link>
+              <Link className="btn ghost" to="/contact">{text.ctaContact}</Link>
             </div>
 
             <div className="heroPoints">
