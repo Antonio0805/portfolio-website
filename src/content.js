@@ -159,20 +159,16 @@ export const content = {
       eyebrow: "Education",
       title: "Academic background",
       lead:
-        "Technical systems training combined with complementary studies that strengthen analytical and interdisciplinary thinking.",
+        "Technical systems training supported by a strong mathematics and computer science foundation.",
       label: "Education",
+      currentLabel: "In progress",
       items: [
         {
           school: "Politehnica University of Bucharest",
           program: "Faculty of Automatic Control and Computer Science • Systems Engineering",
           time: "2022 – 2026",
           detail: "Core technical track",
-        },
-        {
-          school: "University of Bucharest",
-          program: "Faculty of Political Science",
-          time: "2024 – 2027",
-          detail: "Secondary academic focus",
+          current: true,
         },
         {
           school: "Matei Basarab National College",
@@ -376,20 +372,16 @@ export const content = {
       eyebrow: "Educatie",
       title: "Parcurs academic",
       lead:
-        "Formare tehnica in sisteme completata de studii suplimentare care intaresc gandirea analitica si interdisciplinara.",
+        "Formare tehnica in sisteme sustinuta de o baza solida in matematica si informatica.",
       label: "Educatie",
+      currentLabel: "In curs",
       items: [
         {
           school: "Universitatea Politehnica din Bucuresti",
           program: "Facultatea de Automatica si Calculatoare • Ingineria Sistemelor",
           time: "2022 – 2026",
           detail: "Directie tehnica principala",
-        },
-        {
-          school: "Universitatea din Bucuresti",
-          program: "Facultatea de Stiinte Politice",
-          time: "2024 – 2027",
-          detail: "Directie academica secundara",
+          current: true,
         },
         {
           school: "Colegiul National Matei Basarab",

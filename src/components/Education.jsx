@@ -1,11 +1,19 @@
-function Edu({ school, program, time, detail, label }) {
+function Edu({ school, program, time, detail, label, current, currentLabel }) {
   return (
     <article className="timelineItem">
       <div className="timelineMarkerWrap">
-        <span className="timelineMarker" />
+        <span className={`timelineMarker${current ? " timelineMarkerActive" : ""}`} />
       </div>
       <div className="card eduCard timelineCard educationCard">
-        <span className="pill timelineTag">{label}</span>
+        <div className="timelineTagRow">
+          <span className="pill timelineTag">{label}</span>
+          {current && currentLabel ? (
+            <span className="currentBadge">
+              <span className="currentDot" aria-hidden="true" />
+              {currentLabel}
+            </span>
+          ) : null}
+        </div>
         <div className="timelineTop">
           <span className="cardMeta">{time}</span>
           <div>
@@ -34,7 +42,12 @@ export default function Education({ text }) {
 
       <div className="timeline">
         {text.items.map((item) => (
-          <Edu key={item.school + item.time} {...item} label={text.label} />
+          <Edu
+            key={item.school + item.time}
+            {...item}
+            label={text.label}
+            currentLabel={text.currentLabel}
+          />
         ))}
       </div>
     </section>
