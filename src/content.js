@@ -52,6 +52,16 @@ export const content = {
       demoSoon: "Live demo coming soon",
       projects: [
         {
+          title: "EV Charge Optimizer",
+          description:
+            "Full-stack web application for planning and optimizing electric vehicle charging in Bucharest. It gathers real station data, displays it on an interactive map, and recommends the most suitable charging station through a weighted multi-criteria score that combines distance, cost, power, availability, and user preferences.",
+          tags: ["React", "Node.js", "MySQL", "OpenStreetMap"],
+          previewImage: "/Harta.png",
+          demo: "https://youtu.be/Y8BnmQJLo0c",
+          featured: true,
+          metrics: ["510 stations mapped", "Weighted recommendation score", "Route planning"],
+        },
+        {
           title: "Tribunal Case Management",
           description:
             "Software application for managing court cases: cases, parties, lawyers, judges, hearings, and decisions. Full-stack architecture with database integration.",
@@ -59,7 +69,6 @@ export const content = {
           github: "https://github.com/Antonio0805/TribunalCaseManagement",
           previewImage: "/tribunal.jpg",
           demo: "",
-          featured: true,
         },
         {
           title: "Film Collection Manager",
@@ -265,6 +274,16 @@ export const content = {
       demoSoon: "Demo live in curand",
       projects: [
         {
+          title: "EV Charge Optimizer",
+          description:
+            "Aplicatie web full-stack pentru planificarea si optimizarea incarcarii vehiculelor electrice in Bucuresti. Aduna date reale despre statii, le afiseaza pe o harta interactiva si recomanda cea mai potrivita statie printr-un scor multi-criterial ponderat care combina distanta, costul, puterea, disponibilitatea si preferintele utilizatorului.",
+          tags: ["React", "Node.js", "MySQL", "OpenStreetMap"],
+          previewImage: "/Harta.png",
+          demo: "https://youtu.be/Y8BnmQJLo0c",
+          featured: true,
+          metrics: ["510 statii mapate", "Scor multi-criterial", "Planificare traseu"],
+        },
+        {
           title: "Tribunal Case Management",
           description:
             "Aplicatie software pentru gestionarea dosarelor din instanta: cazuri, parti, avocati, judecatori, termene si decizii. Arhitectura full-stack cu integrare baza de date.",
@@ -272,7 +291,6 @@ export const content = {
           github: "https://github.com/Antonio0805/TribunalCaseManagement",
           previewImage: "/tribunal.jpg",
           demo: "",
-          featured: true,
         },
         {
           title: "Film Collection Manager",

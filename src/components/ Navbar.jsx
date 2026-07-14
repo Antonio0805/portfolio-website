@@ -1,13 +1,8 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function Navbar({ language, setLanguage, navText }) {
   const [open, setOpen] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";

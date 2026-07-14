@@ -22,6 +22,7 @@ export default function Projects({ text }) {
   const featured = text.projects.find((p) => p.featured);
   const showcase = text.projects.find((p) => p.showcase);
   const rest = text.projects.filter((p) => !p.featured && !p.showcase);
+  const featuredMetrics = featured?.metrics || text.metrics;
 
   const renderDemoAction = (url, label) => {
     if (!url) {
@@ -67,15 +68,17 @@ export default function Projects({ text }) {
             </div>
 
             <div className="featuredMetrics">
-              {text.metrics.map((metric) => (
+              {featuredMetrics.map((metric) => (
                 <span className="metricChip" key={metric}>{metric}</span>
               ))}
             </div>
 
             <div className="projectActions">
-              <a className="btn small" href={featured.github} target="_blank" rel="noreferrer">
-                <GitHubIcon /> <span>{text.github}</span>
-              </a>
+              {featured.github ? (
+                <a className="btn small" href={featured.github} target="_blank" rel="noreferrer">
+                  <GitHubIcon /> <span>{text.github}</span>
+                </a>
+              ) : null}
 
               {renderDemoAction(featured.demo, text.liveDemo)}
             </div>
