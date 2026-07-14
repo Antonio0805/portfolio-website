@@ -15,10 +15,10 @@ export const content = {
     },
     home: {
       badge: "Systems Engineering • Software • AI",
-      title: "Final-year Computer Science student",
+      title: "Computer Science graduate",
       titleAccent: "ready for what comes next in tech",
       paragraphs: [
-        "Systems Engineering student at Politehnica University of Bucharest, focused on software development, AI workflows, and practical digital products with real-world value.",
+        "Systems Engineering graduate from Politehnica University of Bucharest, focused on software development, AI workflows, and practical digital products with real-world value.",
         "I have built over 10 projects across web applications, automation, data analysis, embedded systems, and AI-based tools.",
         "I am looking for opportunities where I can contribute across frontend, backend, and AI integration while building production-ready solutions.",
       ],
@@ -27,7 +27,7 @@ export const content = {
       points: [
         { value: "10+", label: "Projects delivered across software, automation, AI, and embedded systems" },
         { value: "3 roles", label: "Hands-on experience in AI automation, data analysis, and team operations" },
-        { value: "2022-2026", label: "Systems Engineering studies backed by continuous personal work" },
+        { value: "2022-2026", label: "Completed Systems Engineering studies backed by continuous personal work" },
       ],
       focusEyebrow: "Current focus",
       focusTitle: "Software, AI, and product-minded execution",
@@ -170,7 +170,7 @@ export const content = {
       lead:
         "Technical systems training supported by a strong mathematics and computer science foundation.",
       label: "Education",
-      currentLabel: "In progress",
+      currentLabel: "Completed",
       items: [
         {
           school: "Politehnica University of Bucharest",
@@ -237,10 +237,10 @@ export const content = {
     },
     home: {
       badge: "Ingineria Sistemelor • Software • AI",
-      title: "Student in ultimul an pe zona de Computer Science",
+      title: "Absolvent pe zona de Computer Science",
       titleAccent: "pregatit pentru urmatoarele oportunitati din tech",
       paragraphs: [
-        "Student la Ingineria Sistemelor la Politehnica Bucuresti, concentrat pe dezvoltare software, workflow-uri AI si produse digitale practice cu valoare reala.",
+        "Absolvent de Ingineria Sistemelor la Politehnica Bucuresti, concentrat pe dezvoltare software, workflow-uri AI si produse digitale practice cu valoare reala.",
         "Am construit peste 10 proiecte din zona de web, automatizare, analiza de date, embedded si aplicatii bazate pe AI.",
         "Caut oportunitati in care pot contribui pe frontend, backend si integrare AI, construind solutii pregatite pentru utilizare reala.",
       ],
@@ -249,7 +249,7 @@ export const content = {
       points: [
         { value: "10+", label: "Proiecte realizate in software, automatizare, AI si embedded" },
         { value: "3 roluri", label: "Experienta practica in AI automation, analiza de date si operatiuni" },
-        { value: "2022-2026", label: "Studii de Ingineria Sistemelor sustinute de proiecte personale continue" },
+        { value: "2022-2026", label: "Studii de Ingineria Sistemelor absolvite, sustinute de proiecte personale continue" },
       ],
       focusEyebrow: "Focus actual",
       focusTitle: "Software, AI si executie orientata spre produs",
@@ -392,7 +392,7 @@ export const content = {
       lead:
         "Formare tehnica in sisteme sustinuta de o baza solida in matematica si informatica.",
       label: "Educatie",
-      currentLabel: "In curs",
+      currentLabel: "Absolvit",
       items: [
         {
           school: "Universitatea Politehnica din Bucuresti",
