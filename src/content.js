@@ -24,9 +24,10 @@ export const content = {
       ],
       ctaProjects: "See My Projects",
       ctaContact: "Let's Connect",
+      ctaExperience: "View Experience",
       points: [
         { value: "10+", label: "Projects delivered across software, automation, AI, and embedded systems" },
-        { value: "3 roles", label: "Hands-on experience in AI automation, data analysis, and team operations" },
+        { value: "4 roles", label: "Hands-on experience in SAP analytics, AI automation, data analysis, and team operations" },
         { value: "2022-2026", label: "Completed Systems Engineering studies backed by continuous personal work" },
       ],
       focusEyebrow: "Current focus",
@@ -39,6 +40,16 @@ export const content = {
         { title: "AI APIs", text: "Experimenting with intelligent workflows and practical assistant features." },
         { title: "Systems", text: "Interest in architecture, optimization, and real-world integration." },
       ],
+      cinema: {
+        kicker: "Currently · SAP Analytics at Deloitte",
+        rolePrefix: "Working across",
+        roles: ["SAP Analytics", "Data Engineering", "Automation", "AI Workflows"],
+        scrollCue: "Scroll",
+        hud: ["SAP Datasphere", "SAC", "BW/4HANA", "Python"],
+        band: ["SAP Analytics — Data — Automation — ", "Datasphere — SAC — BW/4HANA — Python — React — "],
+      },
+      stackLabel: "Working with",
+      stack: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud", "SAP BW/4HANA", "Power BI", "Python", "SQL", "React", "Node.js", "Java", "Spring Boot", "OpenAI API", "AI Agents"],
     },
     projects: {
       eyebrow: "Projects",
@@ -133,6 +144,15 @@ export const content = {
         "Early roles across AI experimentation, reporting, and operational support, each contributing to a broader software and systems perspective.",
       items: [
         {
+          role: "SAP Analytics",
+          company: "Deloitte",
+          time: "Aug 2026 – Present",
+          status: "Current role",
+          bullets: [
+            "Working on SAP analytics solutions with SAP Business Data Cloud, SAP Datasphere, SAP Analytics Cloud and SAP BW/4HANA.",
+          ],
+        },
+        {
           role: "AI Automation Trainee",
           company: "Ventivo Grup",
           time: "Sep 2025",
@@ -170,20 +190,21 @@ export const content = {
       lead:
         "Technical systems training supported by a strong mathematics and computer science foundation.",
       label: "Education",
-      currentLabel: "Completed",
       items: [
         {
           school: "Politehnica University of Bucharest",
-          program: "Faculty of Automatic Control and Computer Science • Systems Engineering",
-          time: "2022 – 2026",
-          detail: "Core technical track",
+          program: "Faculty of Automatic Control and Computer Science • Master's Programme in e-Government (e-GOV)",
+          time: "2026 – 2028",
+          detail: "Master's degree",
+          status: "In progress",
           current: true,
         },
         {
-          school: "Matei Basarab National College",
-          program: "Mathematics & Computer Science",
-          time: "2018 – 2022",
-          detail: "Pre-university foundation",
+          school: "Politehnica University of Bucharest",
+          program: "Faculty of Automatic Control and Computer Science • B.Sc. in Systems Engineering",
+          time: "2022 – 2026",
+          detail: "Bachelor's degree",
+          status: "Completed",
         },
       ],
     },
@@ -195,10 +216,18 @@ export const content = {
       core: "Core capabilities",
       languagesTitle: "Languages",
       groups: [
-        { title: "Development", items: ["JavaScript", "React", "HTML", "CSS", "Python", "Java", "C++"] },
-        { title: "Engineering", items: ["OOP", "Data Structures", "Databases & SQL", "Embedded Systems", "Computer Architecture"] },
-        { title: "Applied Work", items: ["Machine Learning", "Data Analysis", "AI APIs", "Automation", "Power BI"] },
-        { title: "Professional", items: ["Public Speaking", "Team Management", "Sales", "HR Policies"] },
+        {
+          title: "SAP & Analytics",
+          items: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud (SAC)", "SAP BW/4HANA", "Power BI", "Excel"],
+        },
+        {
+          title: "Development",
+          items: ["Python", "SQL", "Java", "C++", "JavaScript", "React", "Node.js", "Spring Boot"],
+        },
+        {
+          title: "AI & Tools",
+          items: ["AI Agents & Automation", "OpenAI API", "Machine Learning", "Git", "GitHub"],
+        },
       ],
       languages: [
         { name: "English", level: "Fluent" },
@@ -246,9 +275,10 @@ export const content = {
       ],
       ctaProjects: "Vezi Proiectele",
       ctaContact: "Hai sa vorbim",
+      ctaExperience: "Vezi Experienta",
       points: [
         { value: "10+", label: "Proiecte realizate in software, automatizare, AI si embedded" },
-        { value: "3 roluri", label: "Experienta practica in AI automation, analiza de date si operatiuni" },
+        { value: "4 roluri", label: "Experienta practica in SAP analytics, AI automation, analiza de date si operatiuni" },
         { value: "2022-2026", label: "Studii de Ingineria Sistemelor absolvite, sustinute de proiecte personale continue" },
       ],
       focusEyebrow: "Focus actual",
@@ -261,6 +291,16 @@ export const content = {
         { title: "AI APIs", text: "Experimente cu workflow-uri inteligente si functionalitati practice de asistenta." },
         { title: "Sisteme", text: "Interes pentru arhitectura, optimizare si integrare in cazuri reale." },
       ],
+      cinema: {
+        kicker: "In prezent · SAP Analytics la Deloitte",
+        rolePrefix: "Lucrez in",
+        roles: ["SAP Analytics", "Data Engineering", "Automatizare", "Workflow-uri AI"],
+        scrollCue: "Deruleaza",
+        hud: ["SAP Datasphere", "SAC", "BW/4HANA", "Python"],
+        band: ["SAP Analytics — Date — Automatizare — ", "Datasphere — SAC — BW/4HANA — Python — React — "],
+      },
+      stackLabel: "Lucrez cu",
+      stack: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud", "SAP BW/4HANA", "Power BI", "Python", "SQL", "React", "Node.js", "Java", "Spring Boot", "OpenAI API", "AI Agents"],
     },
     projects: {
       eyebrow: "Proiecte",
@@ -355,6 +395,15 @@ export const content = {
         "Roluri timpurii in AI, raportare si suport operational, fiecare contribuind la o perspectiva mai larga asupra software-ului si sistemelor.",
       items: [
         {
+          role: "SAP Analytics",
+          company: "Deloitte",
+          time: "Aug 2026 – Prezent",
+          status: "Rol actual",
+          bullets: [
+            "Lucrez pe solutii de SAP analytics cu SAP Business Data Cloud, SAP Datasphere, SAP Analytics Cloud si SAP BW/4HANA.",
+          ],
+        },
+        {
           role: "AI Automation Trainee",
           company: "Ventivo Grup",
           time: "Sep 2025",
@@ -392,20 +441,21 @@ export const content = {
       lead:
         "Formare tehnica in sisteme sustinuta de o baza solida in matematica si informatica.",
       label: "Educatie",
-      currentLabel: "Absolvit",
       items: [
         {
           school: "Universitatea Politehnica din Bucuresti",
-          program: "Facultatea de Automatica si Calculatoare • Ingineria Sistemelor",
-          time: "2022 – 2026",
-          detail: "Directie tehnica principala",
+          program: "Facultatea de Automatica si Calculatoare • Master e-Guvernare (e-GOV)",
+          time: "2026 – 2028",
+          detail: "Studii de master",
+          status: "In desfasurare",
           current: true,
         },
         {
-          school: "Colegiul National Matei Basarab",
-          program: "Matematica-Informatica",
-          time: "2018 – 2022",
-          detail: "Fundatie preuniversitara",
+          school: "Universitatea Politehnica din Bucuresti",
+          program: "Facultatea de Automatica si Calculatoare • Licenta in Ingineria Sistemelor",
+          time: "2022 – 2026",
+          detail: "Studii de licenta",
+          status: "Absolvit",
         },
       ],
     },
@@ -417,10 +467,18 @@ export const content = {
       core: "Capabilitati de baza",
       languagesTitle: "Limbi",
       groups: [
-        { title: "Dezvoltare", items: ["JavaScript", "React", "HTML", "CSS", "Python", "Java", "C++"] },
-        { title: "Inginerie", items: ["OOP", "Structuri de Date", "Baze de Date & SQL", "Embedded Systems", "Arhitectura Calculatoarelor"] },
-        { title: "Aplicat", items: ["Machine Learning", "Analiza de Date", "AI APIs", "Automatizare", "Power BI"] },
-        { title: "Profesional", items: ["Public Speaking", "Team Management", "Sales", "HR Policies"] },
+        {
+          title: "SAP & Analiza",
+          items: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud (SAC)", "SAP BW/4HANA", "Power BI", "Excel"],
+        },
+        {
+          title: "Dezvoltare",
+          items: ["Python", "SQL", "Java", "C++", "JavaScript", "React", "Node.js", "Spring Boot"],
+        },
+        {
+          title: "AI & Tool-uri",
+          items: ["Agenti AI & Automatizare", "OpenAI API", "Machine Learning", "Git", "GitHub"],
+        },
       ],
       languages: [
         { name: "Engleza", level: "Fluent" },

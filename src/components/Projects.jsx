@@ -1,3 +1,8 @@
+import { motion } from "motion/react";
+import SectionHead from "./SectionHead";
+import { Reveal, Stagger, StaggerItem } from "./Motion";
+import { popIn } from "../lib/motion";
+
 const GitHubIcon = (props) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
     <path d="M12 .5C5.73.5.75 5.63.75 12c0 5.1 3.29 9.43 7.86 10.96.58.11.79-.26.79-.57v-2.1c-3.2.71-3.88-1.39-3.88-1.39-.53-1.37-1.29-1.74-1.29-1.74-1.05-.73.08-.72.08-.72 1.16.08 1.77 1.22 1.77 1.22 1.03 1.8 2.7 1.28 3.36.98.1-.77.4-1.28.72-1.57-2.55-.3-5.23-1.31-5.23-5.84 0-1.29.45-2.34 1.19-3.17-.12-.3-.52-1.53.11-3.18 0 0 .97-.32 3.18 1.2a10.7 10.7 0 0 1 2.9-.4c.98 0 1.97.14 2.9.4 2.2-1.52 3.17-1.2 3.17-1.2.64 1.65.24 2.88.12 3.18.74.83 1.19 1.88 1.19 3.17 0 4.54-2.69 5.54-5.25 5.83.41.37.78 1.1.78 2.22v3.29c0 .31.21.69.8.57 4.57-1.53 7.86-5.86 7.86-10.96C23.25 5.63 18.27.5 12 .5Z" />
@@ -46,16 +51,11 @@ export default function Projects({ text }) {
 
   return (
     <section className="section">
-      <div className="sectionHead">
-        <div>
-          <span className="sectionEyebrow">{text.eyebrow}</span>
-          <h2 className="h2">{text.title}</h2>
-          <p className="sectionLead">{text.lead}</p>
-        </div>
-      </div>
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} />
 
       {featured && (
-        <article className="featuredCard">
+        <Reveal>
+        <article className="featuredCard spotlight">
           <div className="featuredLeft">
             <span className="pill">{text.featured}</span>
             <h3 className="featuredTitle">{featured.title}</h3>
@@ -117,10 +117,12 @@ export default function Projects({ text }) {
             )}
           </div>
         </article>
+        </Reveal>
       )}
 
       {showcase && (
-        <article className="featuredCard showcaseCard">
+        <Reveal>
+        <article className="featuredCard showcaseCard spotlight">
           <div className="featuredLeft">
             <span className="pill">{text.featured}</span>
             <h3 className="featuredTitle">{showcase.title}</h3>
@@ -144,26 +146,30 @@ export default function Projects({ text }) {
           </div>
 
           <div className="featuredRight">
-            <div className="showcaseGallery">
+            <Stagger className="showcaseGallery" gap={0.1} delay={0.2}>
               {showcase.showcaseImages?.map((image, index) => (
-                <img
+                <motion.img
                   className={`showcaseGalleryImage image${index + 1}`}
                   key={image}
                   src={image}
                   alt={`${showcase.title} preview ${index + 1}`}
                   loading="lazy"
+                  variants={popIn}
+                  whileHover={{ scale: 1.04, rotate: index % 2 ? 1 : -1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 />
               ))}
-            </div>
+            </Stagger>
           </div>
         </article>
+        </Reveal>
       )}
 
-      <div className="projectsGrid premium">
+      <Stagger className="projectsGrid premium" gap={0.09}>
         {rest.map((p) => (
+          <StaggerItem className="gridCell" key={p.title}>
           <article
-            className={`projectCard premium${p.previewImage || p.previewPdf ? " hasPreview" : ""}`}
-            key={p.title}
+            className={`projectCard premium spotlight${p.previewImage || p.previewPdf ? " hasPreview" : ""}`}
           >
             {p.previewPdf ? (
               <div className="projectPreviewFrame">
@@ -174,12 +180,14 @@ export default function Projects({ text }) {
                 />
               </div>
             ) : p.previewImage ? (
-              <img
-                className={`projectPreviewImage${p.previewFit === "contain" ? " contain" : ""}`}
-                src={p.previewImage}
-                alt={`${p.title} preview`}
-                loading="lazy"
-              />
+              <div className="projectMedia">
+                <img
+                  className={`projectPreviewImage${p.previewFit === "contain" ? " contain" : ""}`}
+                  src={p.previewImage}
+                  alt={`${p.title} preview`}
+                  loading="lazy"
+                />
+              </div>
             ) : null}
 
             <div className="projectTopRow">
@@ -204,8 +212,9 @@ export default function Projects({ text }) {
               {renderDemoAction(p.demo, text.live)}
             </div>
           </article>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
     </section>
   );
 }

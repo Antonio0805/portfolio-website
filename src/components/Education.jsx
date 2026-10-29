@@ -1,16 +1,16 @@
-function Edu({ school, program, time, detail, label, current, currentLabel }) {
+import SectionHead from "./SectionHead";
+import { Timeline, TimelineItem } from "./Motion";
+
+function Edu({ school, program, time, detail, label, current, status }) {
   return (
-    <article className="timelineItem">
-      <div className="timelineMarkerWrap">
-        <span className={`timelineMarker${current ? " timelineMarkerActive" : ""}`} />
-      </div>
-      <div className="card eduCard timelineCard educationCard">
+    <TimelineItem active={current}>
+      <div className="card eduCard timelineCard educationCard spotlight">
         <div className="timelineTagRow">
           <span className="pill timelineTag">{label}</span>
-          {current && currentLabel ? (
-            <span className="currentBadge">
+          {status ? (
+            <span className={`currentBadge${current ? "" : " doneBadge"}`}>
               <span className="currentDot" aria-hidden="true" />
-              {currentLabel}
+              {status}
             </span>
           ) : null}
         </div>
@@ -25,31 +25,24 @@ function Edu({ school, program, time, detail, label, current, currentLabel }) {
           <span className="muted">{detail}</span>
         </div>
       </div>
-    </article>
+    </TimelineItem>
   );
 }
 
 export default function Education({ text }) {
   return (
     <section id="education" className="section">
-      <div className="sectionHead premiumSectionHead">
-        <div>
-          <span className="sectionEyebrow premiumEyebrow">{text.eyebrow}</span>
-          <h2 className="h2 premiumTitle">{text.title}</h2>
-        </div>
-        <p className="sectionLead premiumLead">{text.lead}</p>
-      </div>
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} />
 
-      <div className="timeline">
+      <Timeline>
         {text.items.map((item) => (
           <Edu
             key={item.school + item.time}
             {...item}
             label={text.label}
-            currentLabel={text.currentLabel}
           />
         ))}
-      </div>
+      </Timeline>
     </section>
   );
 }

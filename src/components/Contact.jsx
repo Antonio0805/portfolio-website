@@ -1,3 +1,6 @@
+import SectionHead from "./SectionHead";
+import { Reveal, Stagger, StaggerItem } from "./Motion";
+
 const PhoneIcon = (props) => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
@@ -31,69 +34,64 @@ const ArrowIcon = (props) => (
 );
 
 export default function Contact({ text }) {
+  const cards = [
+    {
+      href: "tel:+40758921740",
+      icon: <PhoneIcon />,
+      label: text.phone,
+      value: "+40 758 921 740",
+      hint: text.phoneHint,
+    },
+    {
+      href: "mailto:antoniosmarandescu@yahoo.com",
+      icon: <EmailIcon />,
+      label: text.email,
+      value: "antoniosmarandescu@yahoo.com",
+      hint: text.emailHint,
+    },
+    {
+      href: "https://github.com/Antonio0805",
+      icon: <GitHubIcon />,
+      label: text.github,
+      value: "github.com/Antonio0805",
+      hint: text.githubHint,
+      external: true,
+    },
+    {
+      href: "https://linkedin.com/in/antonio-smarandescu-80b04b1b9",
+      icon: <LinkedInIcon />,
+      label: text.linkedin,
+      value: "linkedin.com/in/antonio-smarandescu-80b04b1b9",
+      hint: text.linkedinHint,
+      external: true,
+    },
+  ];
+
   return (
     <section id="contact" className="section">
-      <div className="sectionHead">
-        <div>
-          <span className="sectionEyebrow">{text.eyebrow}</span>
-          <h2 className="h2">{text.title}</h2>
-        </div>
-        <p className="sectionLead">{text.lead}</p>
-      </div>
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} />
 
-      <div className="card">
-        <div className="contactGrid">
-          <a className="contactCard contactCardLink" href="tel:+40758921740">
-            <span className="contactIcon" aria-hidden="true"><PhoneIcon /></span>
-            <div className="contactBody">
-              <span className="contactLabel">{text.phone}</span>
-              <span className="contactValue">+40 758 921 740</span>
-              <span className="contactHint">{text.phoneHint}</span>
-            </div>
-            <span className="contactArrow" aria-hidden="true"><ArrowIcon /></span>
-          </a>
-
-          <a className="contactCard contactCardLink" href="mailto:antoniosmarandescu@yahoo.com">
-            <span className="contactIcon" aria-hidden="true"><EmailIcon /></span>
-            <div className="contactBody">
-              <span className="contactLabel">{text.email}</span>
-              <span className="contactValue">antoniosmarandescu@yahoo.com</span>
-              <span className="contactHint">{text.emailHint}</span>
-            </div>
-            <span className="contactArrow" aria-hidden="true"><ArrowIcon /></span>
-          </a>
-
-          <a
-            className="contactCard contactCardLink"
-            href="https://github.com/Antonio0805"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span className="contactIcon" aria-hidden="true"><GitHubIcon /></span>
-            <div className="contactBody">
-              <span className="contactLabel">{text.github}</span>
-              <span className="contactValue">github.com/Antonio0805</span>
-              <span className="contactHint">{text.githubHint}</span>
-            </div>
-            <span className="contactArrow" aria-hidden="true"><ArrowIcon /></span>
-          </a>
-
-          <a
-            className="contactCard contactCardLink"
-            href="https://linkedin.com/in/antonio-smarandescu-80b04b1b9"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span className="contactIcon" aria-hidden="true"><LinkedInIcon /></span>
-            <div className="contactBody">
-              <span className="contactLabel">{text.linkedin}</span>
-              <span className="contactValue">linkedin.com/in/antonio-smarandescu-80b04b1b9</span>
-              <span className="contactHint">{text.linkedinHint}</span>
-            </div>
-            <span className="contactArrow" aria-hidden="true"><ArrowIcon /></span>
-          </a>
-        </div>
-      </div>
+      <Reveal className="card contactShell">
+        <Stagger className="contactGrid" gap={0.08} delay={0.15}>
+          {cards.map((card) => (
+            <StaggerItem className="gridCell" key={card.href}>
+              <a
+                className="contactCard contactCardLink spotlight"
+                href={card.href}
+                {...(card.external ? { target: "_blank", rel: "noreferrer" } : {})}
+              >
+                <span className="contactIcon" aria-hidden="true">{card.icon}</span>
+                <div className="contactBody">
+                  <span className="contactLabel">{card.label}</span>
+                  <span className="contactValue">{card.value}</span>
+                  <span className="contactHint">{card.hint}</span>
+                </div>
+                <span className="contactArrow" aria-hidden="true"><ArrowIcon /></span>
+              </a>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Reveal>
     </section>
   );
 }

@@ -1,3 +1,7 @@
+import SectionHead from "./SectionHead";
+import { Stagger, StaggerItem, Timeline, TimelineItem } from "./Motion";
+import { slideIn } from "../lib/motion";
+
 const COMPANY_PALETTE = [
   "linear-gradient(135deg, #0b5f59, #2563eb)",
   "linear-gradient(135deg, #7c3aed, #ec4899)",
@@ -24,14 +28,19 @@ function CompanyAvatar({ company }) {
   );
 }
 
-function Item({ role, company, time, bullets }) {
+function Item({ role, company, time, bullets, status, tag }) {
   return (
-    <article className="timelineItem">
-      <div className="timelineMarkerWrap">
-        <span className="timelineMarker" />
-      </div>
-      <div className="card timelineCard experienceCard">
-        <span className="timelineTag">Experience</span>
+    <TimelineItem active={Boolean(status)}>
+      <div className="card timelineCard experienceCard spotlight">
+        <div className="timelineTagRow">
+          <span className="pill timelineTag">{tag}</span>
+          {status ? (
+            <span className="currentBadge">
+              <span className="currentDot" aria-hidden="true" />
+              {status}
+            </span>
+          ) : null}
+        </div>
         <div className="timelineTop">
           <span className="cardMeta">{time}</span>
           <div className="experienceHeader">
@@ -43,30 +52,26 @@ function Item({ role, company, time, bullets }) {
           </div>
         </div>
 
-        <ul className="list">
-          {bullets.map((b, i) => <li key={i}>{b}</li>)}
-        </ul>
+        <Stagger as="ul" className="list" gap={0.07} delay={0.25}>
+          {bullets.map((b, i) => (
+            <StaggerItem as="li" key={i} variants={slideIn}>{b}</StaggerItem>
+          ))}
+        </Stagger>
       </div>
-    </article>
+    </TimelineItem>
   );
 }
 
 export default function Experience({ text }) {
   return (
     <section id="experience" className="section">
-      <div className="sectionHead premiumSectionHead">
-        <div>
-          <span className="sectionEyebrow premiumEyebrow">{text.eyebrow}</span>
-          <h2 className="h2 premiumTitle">{text.title}</h2>
-        </div>
-        <p className="sectionLead premiumLead">{text.lead}</p>
-      </div>
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} />
 
-      <div className="timeline">
+      <Timeline>
         {text.items.map((item) => (
-          <Item key={item.role + item.company + item.time} {...item} />
+          <Item key={item.role + item.company + item.time} {...item} tag={text.eyebrow} />
         ))}
-      </div>
+      </Timeline>
     </section>
   );
 }
