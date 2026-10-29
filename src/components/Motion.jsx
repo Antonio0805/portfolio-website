@@ -9,7 +9,6 @@ import {
   useScroll,
   useSpring,
   useTransform,
-  useVelocity,
 } from "motion/react";
 import { EASE, EASE_IN, VIEWPORT, fadeUp, staggerVariants } from "../lib/motion";
 
@@ -234,33 +233,6 @@ export function RoleRotator({ roles, interval = 2600 }) {
         </motion.span>
       </AnimatePresence>
     </span>
-  );
-}
-
-// Oversized type that slides with scroll and leans with scroll velocity.
-export function KineticBand({ rows }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const { scrollY } = useScroll();
-  const velocity = useVelocity(scrollY);
-  const skewX = useSpring(useTransform(velocity, [-2500, 2500], [10, -10]), { stiffness: 220, damping: 40 });
-  const forward = useTransform(scrollYProgress, [0, 1], ["0%", "-28%"]);
-  const backward = useTransform(scrollYProgress, [0, 1], ["-28%", "0%"]);
-
-  return (
-    <section className="kineticBand" ref={ref} aria-hidden="true">
-      {rows.map((row, index) => (
-        <motion.div
-          key={row}
-          className={`kineticRow${index % 2 ? " outline" : ""}`}
-          style={{ x: index % 2 ? backward : forward, skewX }}
-        >
-          {Array.from({ length: 4 }, (_, copy) => (
-            <span key={copy}>{row}</span>
-          ))}
-        </motion.div>
-      ))}
-    </section>
   );
 }
 

@@ -3,7 +3,6 @@ import { lazy, Suspense, useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import {
   CountUp,
-  KineticBand,
   KineticText,
   RoleRotator,
   Stagger,
@@ -124,21 +123,26 @@ function Stage({ text, ready }) {
 }
 
 export default function Home({ text, ready = true }) {
+  // The hero card lifts up over the stage's bottom edge as it scrolls into view.
+  const cardRef = useRef(null);
+  const { scrollYProgress: cardProgress } = useScroll({ target: cardRef, offset: ["start end", "start 35%"] });
+  const cardLift = useSpring(cardProgress, { stiffness: 120, damping: 30, mass: 0.4 });
+  const cardY = useTransform(cardLift, [0, 1], [90, 0]);
+  const cardScale = useTransform(cardLift, [0, 1], [0.94, 1]);
+  const cardOpacity = useTransform(cardLift, [0, 1], [0.35, 1]);
+
   return (
     <>
       <Stage
         text={{ ...text.cinema, ctaProjects: text.ctaProjects, ctaExperience: text.ctaExperience }}
         ready={ready}
       />
-      <KineticBand rows={text.cinema.band} />
       <main className="container">
         <section className="hero">
           <motion.div
+            ref={cardRef}
             className="heroCard spotlight"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-            transition={{ duration: 0.8, ease: EASE }}
+            style={{ y: cardY, scale: cardScale, opacity: cardOpacity }}
           >
             <Stagger className="heroContent" gap={0.1} delay={0.15}>
               <StaggerItem as="p" className="badge">{text.badge}</StaggerItem>

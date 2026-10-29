@@ -568,7 +568,7 @@ a:hover {
   margin-bottom: 4px;
 }
 
-.heroPoint span {
+.heroPoint > span {
   color: var(--muted);
   font-size: 0.9rem;
 }
@@ -1691,7 +1691,7 @@ a:hover {
     font-size: 1rem;
   }
 
-  .heroPoint span {
+  .heroPoint > span {
     font-size: 0.86rem;
   }
 
@@ -2556,7 +2556,7 @@ a:hover {
   justify-content: center;
   min-height: 100svh;
   margin-top: calc(-1 * var(--nav-h));
-  padding: calc(var(--nav-h) + 48px) 0 120px;
+  padding: calc(var(--nav-h) + 48px) 0 168px;
   overflow: hidden;
   border-radius: 0 0 40px 40px;
   color: #e2f3f1;
@@ -2792,7 +2792,7 @@ a:hover {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 28px;
+  bottom: 120px;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -2831,37 +2831,6 @@ a:hover {
   to { transform: translateY(260%); }
 }
 
-/* Kinetic band */
-.kineticBand {
-  display: grid;
-  gap: 2px;
-  padding: 64px 0 36px;
-  overflow: hidden;
-}
-
-.kineticRow {
-  display: flex;
-  width: max-content;
-  color: #0f172a;
-  font-family: var(--font-display);
-  font-size: clamp(3.25rem, 9vw, 8.5rem);
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
-  will-change: transform;
-}
-
-.kineticRow span {
-  padding-right: 0.3em;
-}
-
-.kineticRow.outline {
-  color: transparent;
-  font-style: italic;
-  -webkit-text-stroke: 1.5px rgba(15, 118, 110, 0.6);
-}
-
 @media (max-width: 1080px) {
   .stageInner {
     grid-template-columns: 1fr;
@@ -2890,7 +2859,7 @@ a:hover {
 
   .stage {
     min-height: auto;
-    padding: calc(var(--nav-h) + 36px) 0 96px;
+    padding: calc(var(--nav-h) + 36px) 0 140px;
     border-radius: 0 0 28px 28px;
   }
 
@@ -2907,9 +2876,6 @@ a:hover {
     font-size: 0.68rem;
   }
 
-  .kineticBand {
-    padding: 44px 0 20px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2924,4 +2890,26 @@ a:hover {
 
 .skillGroup .skillGroupPill {
   justify-self: start;
+}
+
+/* Hero card rises over the stage's bottom edge */
+.stage + .container .hero {
+  position: relative;
+  z-index: 2;
+  margin-top: -96px;
+}
+
+.stage + .container .heroCard {
+  transform-origin: 50% 0;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 640px) {
+  .stage + .container .hero {
+    margin-top: -56px;
+  }
+
+  .scrollCue {
+    bottom: 76px;
+  }
 }

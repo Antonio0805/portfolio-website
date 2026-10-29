@@ -14,31 +14,31 @@ export const content = {
       langEn: "EN",
     },
     home: {
-      badge: "Systems Engineering • Software • AI",
-      title: "Computer Science graduate",
-      titleAccent: "ready for what comes next in tech",
+      badge: "SAP Analytics • Data • Automation",
+      title: "SAP Analytics at Deloitte,",
+      titleAccent: "building with data, software and AI",
       paragraphs: [
-        "Systems Engineering graduate from Politehnica University of Bucharest, focused on software development, AI workflows, and practical digital products with real-world value.",
-        "I have built over 10 projects across web applications, automation, data analysis, embedded systems, and AI-based tools.",
-        "I am looking for opportunities where I can contribute across frontend, backend, and AI integration while building production-ready solutions.",
+        "I work in SAP Analytics at Deloitte, with SAP Business Data Cloud, SAP Datasphere, SAP Analytics Cloud and SAP BW/4HANA.",
+        "Systems Engineering graduate of Politehnica University of Bucharest, now continuing with the Master's Programme in e-Government (e-GOV).",
+        "Alongside SAP work, I build web applications, reporting tools and automated workflows, and I'm interested in applying AI to automate everyday work.",
       ],
       ctaProjects: "See My Projects",
       ctaContact: "Let's Connect",
       ctaExperience: "View Experience",
       points: [
         { value: "10+", label: "Projects delivered across software, automation, AI, and embedded systems" },
-        { value: "4 roles", label: "Hands-on experience in SAP analytics, AI automation, data analysis, and team operations" },
-        { value: "2022-2026", label: "Completed Systems Engineering studies backed by continuous personal work" },
+        { value: "4 roles", label: "From Power BI reporting and AI automation to SAP analytics at Deloitte" },
+        { value: "2026-2028", label: "Master's in e-Government (e-GOV) at Politehnica University of Bucharest" },
       ],
       focusEyebrow: "Current focus",
-      focusTitle: "Software, AI, and product-minded execution",
+      focusTitle: "SAP analytics, data and automation",
       focusText:
-        "React interfaces, Python-based logic, AI APIs, and technical projects designed to be clean, scalable, and genuinely useful.",
+        "Data modelling and reporting across the SAP analytics stack, backed by Python, SQL and web development for internal tools and automation.",
       summary: [
-        { title: "React", text: "Frontend interfaces with structured components and responsive layouts." },
-        { title: "Python", text: "Automation, analysis, and logic-heavy tools for technical use cases." },
-        { title: "AI APIs", text: "Experimenting with intelligent workflows and practical assistant features." },
-        { title: "Systems", text: "Interest in architecture, optimization, and real-world integration." },
+        { title: "SAP Analytics", text: "Datasphere, SAP Analytics Cloud and BW/4HANA for enterprise reporting." },
+        { title: "Reporting", text: "Power BI and Excel dashboards that support business decisions." },
+        { title: "Development", text: "Python, SQL, React and Node.js for web apps and internal tools." },
+        { title: "AI & Automation", text: "AI agents and OpenAI API workflows that automate everyday work." },
       ],
       cinema: {
         kicker: "Currently · SAP Analytics at Deloitte",
@@ -46,7 +46,6 @@ export const content = {
         roles: ["SAP Analytics", "Data Engineering", "Automation", "AI Workflows"],
         scrollCue: "Scroll",
         hud: ["SAP Datasphere", "SAC", "BW/4HANA", "Python"],
-        band: ["SAP Analytics — Data — Automation — ", "Datasphere — SAC — BW/4HANA — Python — React — "],
       },
       stackLabel: "Working with",
       stack: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud", "SAP BW/4HANA", "Power BI", "Python", "SQL", "React", "Node.js", "Java", "Spring Boot", "OpenAI API", "AI Agents"],
@@ -140,8 +139,7 @@ export const content = {
     experience: {
       eyebrow: "Experience",
       title: "Work Experience",
-      lead:
-        "Early roles across AI experimentation, reporting, and operational support, each contributing to a broader software and systems perspective.",
+      lead: "From reporting and AI automation traineeships to SAP Analytics at Deloitte.",
       items: [
         {
           role: "SAP Analytics",
@@ -265,31 +263,31 @@ export const content = {
       langEn: "EN",
     },
     home: {
-      badge: "Ingineria Sistemelor • Software • AI",
-      title: "Absolvent pe zona de Computer Science",
-      titleAccent: "pregatit pentru urmatoarele oportunitati din tech",
+      badge: "SAP Analytics • Date • Automatizare",
+      title: "SAP Analytics la Deloitte,",
+      titleAccent: "construind cu date, software si AI",
       paragraphs: [
-        "Absolvent de Ingineria Sistemelor la Politehnica Bucuresti, concentrat pe dezvoltare software, workflow-uri AI si produse digitale practice cu valoare reala.",
-        "Am construit peste 10 proiecte din zona de web, automatizare, analiza de date, embedded si aplicatii bazate pe AI.",
-        "Caut oportunitati in care pot contribui pe frontend, backend si integrare AI, construind solutii pregatite pentru utilizare reala.",
+        "Lucrez in SAP Analytics la Deloitte, cu SAP Business Data Cloud, SAP Datasphere, SAP Analytics Cloud si SAP BW/4HANA.",
+        "Absolvent de Ingineria Sistemelor la Universitatea Politehnica din Bucuresti, acum la programul de master e-Guvernare (e-GOV).",
+        "Pe langa SAP, construiesc aplicatii web, instrumente de raportare si fluxuri automatizate, si ma intereseaza sa folosesc AI pentru a automatiza munca de zi cu zi.",
       ],
       ctaProjects: "Vezi Proiectele",
       ctaContact: "Hai sa vorbim",
       ctaExperience: "Vezi Experienta",
       points: [
         { value: "10+", label: "Proiecte realizate in software, automatizare, AI si embedded" },
-        { value: "4 roluri", label: "Experienta practica in SAP analytics, AI automation, analiza de date si operatiuni" },
-        { value: "2022-2026", label: "Studii de Ingineria Sistemelor absolvite, sustinute de proiecte personale continue" },
+        { value: "4 roluri", label: "De la raportare Power BI si automatizare AI la SAP analytics la Deloitte" },
+        { value: "2026-2028", label: "Master in e-Guvernare (e-GOV) la Universitatea Politehnica din Bucuresti" },
       ],
       focusEyebrow: "Focus actual",
-      focusTitle: "Software, AI si executie orientata spre produs",
+      focusTitle: "SAP analytics, date si automatizare",
       focusText:
-        "Interfete React, logica in Python, AI APIs si proiecte tehnice gandite sa fie clare, scalabile si cu adevarat utile.",
+        "Modelare de date si raportare in ecosistemul SAP analytics, sustinute de Python, SQL si dezvoltare web pentru instrumente interne si automatizare.",
       summary: [
-        { title: "React", text: "Interfete frontend cu componente bine structurate si layout responsive." },
-        { title: "Python", text: "Automatizare, analiza si aplicatii cu logica tehnica mai complexa." },
-        { title: "AI APIs", text: "Experimente cu workflow-uri inteligente si functionalitati practice de asistenta." },
-        { title: "Sisteme", text: "Interes pentru arhitectura, optimizare si integrare in cazuri reale." },
+        { title: "SAP Analytics", text: "Datasphere, SAP Analytics Cloud si BW/4HANA pentru raportare enterprise." },
+        { title: "Raportare", text: "Dashboard-uri Power BI si Excel care sustin deciziile de business." },
+        { title: "Dezvoltare", text: "Python, SQL, React si Node.js pentru aplicatii web si instrumente interne." },
+        { title: "AI & Automatizare", text: "Agenti AI si fluxuri cu OpenAI API care automatizeaza munca de zi cu zi." },
       ],
       cinema: {
         kicker: "In prezent · SAP Analytics la Deloitte",
@@ -297,7 +295,6 @@ export const content = {
         roles: ["SAP Analytics", "Data Engineering", "Automatizare", "Workflow-uri AI"],
         scrollCue: "Deruleaza",
         hud: ["SAP Datasphere", "SAC", "BW/4HANA", "Python"],
-        band: ["SAP Analytics — Date — Automatizare — ", "Datasphere — SAC — BW/4HANA — Python — React — "],
       },
       stackLabel: "Lucrez cu",
       stack: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud", "SAP BW/4HANA", "Power BI", "Python", "SQL", "React", "Node.js", "Java", "Spring Boot", "OpenAI API", "AI Agents"],
@@ -391,8 +388,7 @@ export const content = {
     experience: {
       eyebrow: "Experienta",
       title: "Experienta profesionala",
-      lead:
-        "Roluri timpurii in AI, raportare si suport operational, fiecare contribuind la o perspectiva mai larga asupra software-ului si sistemelor.",
+      lead: "De la traineeship-uri in raportare si automatizare AI pana la SAP Analytics la Deloitte.",
       items: [
         {
           role: "SAP Analytics",
