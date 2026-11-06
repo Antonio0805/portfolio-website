@@ -29,7 +29,7 @@ function CopyButton({ value }) {
       className="contactCopy"
       onClick={copy}
       aria-label={copied ? `Copied ${value}` : `Copy ${value}`}
-      data-cursor="copy"
+     
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
@@ -57,7 +57,7 @@ export default function Contact({ text }) {
 
   return (
     <>
-      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="signal" />
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="mist" />
 
       <section className="chapter contactList" data-chapter="ink" aria-label={text.eyebrow}>
         <Stagger as="ul" className="wrap contactRows" gap={0.09}>
@@ -68,7 +68,7 @@ export default function Contact({ text }) {
                 <a
                   className="contactValue"
                   href={row.href}
-                  data-cursor="open"
+                 
                   {...(row.external ? { target: "_blank", rel: "noreferrer" } : {})}
                 >
                   {row.value}

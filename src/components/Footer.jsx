@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Magnetic, Reveal, RollText } from "./Motion";
+import { KineticText, Magnetic, RollText } from "./Motion";
 import { ArrowUpRight, DownloadIcon, GitHubIcon, LinkedInIcon } from "./Icons";
 import { EMAIL, GITHUB, LINKEDIN } from "../lib/contacts";
 
@@ -7,7 +7,7 @@ import { EMAIL, GITHUB, LINKEDIN } from "../lib/contacts";
 // the wordmark rising out of its own baseline at full width.
 export default function Footer({ nav, cta, showCta = true }) {
   return (
-    <footer className="chapter footer" data-chapter="signal">
+    <footer className="chapter footer" data-chapter="mist">
       <div className="wrap footerInner">
         {showCta ? (
           <Link className="footerCta" to="/contact">
@@ -18,7 +18,14 @@ export default function Footer({ nav, cta, showCta = true }) {
 
         <div className="footerLinks">
           <Magnetic>
-            <a className="btn primary" href={EMAIL.href} data-cursor="open">
+            <a className="btn primary cvBtn" href="/cv.pdf" target="_blank" rel="noreferrer">
+              <DownloadIcon />
+              <RollText>{nav.downloadCv}</RollText>
+              <span className="cvTag">PDF</span>
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a className="btn ghost" href={EMAIL.href}>
               <RollText>{EMAIL.value}</RollText>
             </a>
           </Magnetic>
@@ -34,17 +41,9 @@ export default function Footer({ nav, cta, showCta = true }) {
               <RollText>LinkedIn</RollText>
             </a>
           </Magnetic>
-          <Magnetic>
-            <a className="btn ghost" href="/cv.pdf" target="_blank" rel="noreferrer">
-              <DownloadIcon />
-              <RollText>{nav.downloadCv}</RollText>
-            </a>
-          </Magnetic>
         </div>
 
-        <Reveal as="p" className="footerWord" aria-hidden="true" y={60} delay={0.15}>
-          Antonio Smărăndescu
-        </Reveal>
+        <KineticText as="p" className="footerWord" text="Antonio Smărăndescu" gap={0.025} inView />
         <p className="footerSmall">© {new Date().getFullYear()} Antonio-Ștefan Smărăndescu</p>
       </div>
     </footer>

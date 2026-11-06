@@ -55,12 +55,12 @@ button {
 }
 
 ::selection {
-  background: var(--c-signal);
+  background: var(--c-teal-light);
   color: var(--c-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent, var(--c-signal));
+  outline: 2px solid var(--accent, var(--c-teal-light));
   outline-offset: 4px;
 }
 
@@ -79,10 +79,19 @@ button {
   color: var(--fg);
 }
 
-/* Main sits above the footer so the footer is uncovered at the end. */
 .siteMain {
   position: relative;
   z-index: 1;
+}
+
+/* A chapter that settles in as a sheet over the colour of the one before. */
+.sheetUnder {
+  background: var(--bg);
+}
+
+.sheet {
+  overflow: clip;
+  transform-origin: 50% 0;
 }
 
 .srOnly {
@@ -164,7 +173,7 @@ button {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--c-signal);
+  background: var(--c-coral);
   flex: none;
 }
 

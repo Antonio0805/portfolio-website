@@ -1,93 +1,56 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
-  useAnimationFrame,
   useInView,
-  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
-  useVelocity,
 } from "motion/react";
 import { useFinePointer } from "../lib/useFinePointer";
 import { useHiddenStart } from "../lib/useHiddenStart";
-import { EXPO, IN_OUT, STAGGER, VIEWPORT, fadeUp, lineUp, staggerVariants } from "../lib/motion";
+import { EASE, EXPO, IN_OUT, STAGGER, VIEWPORT, fadeUp, lineUp, staggerVariants } from "../lib/motion";
 
-// The label the route curtain shows. A context, so a page that is leaving still
-// reads the destination's name while it covers the screen.
-const RouteContext = createContext({ label: "" });
-export const RouteLabelProvider = RouteContext.Provider;
-
-const curtainSignal = {
-  covered: { clipPath: "inset(0% 0% 0% 0%)" },
-  reveal: {
-    clipPath: ["inset(0% 0% 0% 0%)", "inset(0% 0% 100% 0%)"],
-    transition: { duration: 0.7, ease: IN_OUT, delay: 0.16 },
-    transitionEnd: { visibility: "hidden" },
-  },
-  cover: {
-    visibility: "visible",
-    clipPath: ["inset(100% 0% 0% 0%)", "inset(0% 0% 0% 0%)"],
-    transition: { duration: 0.5, ease: IN_OUT },
-  },
+// A quiet change of page: the old page fades and lifts away quickly, the new
+// one fades in and settles from a little below. Nothing covers the screen.
+const pageVariants = {
+  initial: { opacity: 0, y: 28 },
+  enter: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EXPO, delay: 0.05 } },
+  exit: { opacity: 0, y: -12, transition: { duration: 0.25, ease: EASE } },
 };
 
-const curtainInk = {
-  covered: { clipPath: "inset(0% 0% 0% 0%)" },
-  reveal: {
-    clipPath: ["inset(0% 0% 0% 0%)", "inset(0% 0% 100% 0%)"],
-    transition: { duration: 0.7, ease: IN_OUT, delay: 0.08 },
-    transitionEnd: { visibility: "hidden" },
-  },
-  cover: {
-    visibility: "visible",
-    clipPath: ["inset(100% 0% 0% 0%)", "inset(0% 0% 0% 0%)"],
-    transition: { duration: 0.5, ease: IN_OUT, delay: 0.07 },
-  },
-};
-
-const curtainLabel = {
-  covered: { y: "0%" },
-  reveal: { y: "-110%", transition: { duration: 0.45, ease: IN_OUT } },
-  cover: { y: ["110%", "0%"], transition: { duration: 0.55, ease: EXPO, delay: 0.22 } },
-};
-
-const pageContent = {
-  covered: { y: 70 },
-  reveal: { y: 0, transition: { duration: 1.1, ease: EXPO, delay: 0.2 } },
-  cover: { y: -40, transition: { duration: 0.5, ease: IN_OUT } },
-};
-
-// Two coloured panels wipe up over the outgoing page, the destination's name
-// rises on the second, then both lift away from the new page.
 export function PageTransition({ children }) {
-  const { label } = useContext(RouteContext);
-  const reduceMotion = useReducedMotion();
+  return (
+    <motion.div variants={pageVariants} initial="initial" animate="enter" exit="exit">
+      {children}
+    </motion.div>
+  );
+}
 
-  if (reduceMotion) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: 0.3 } }}
-        exit={{ opacity: 0, transition: { duration: 0.2 } }}
-      >
-        {children}
-      </motion.div>
-    );
-  }
+// A chapter that arrives as a sheet: it rises with rounded top corners from
+// slightly smaller than the page and settles flat and full width as its top
+// reaches the upper third of the screen. `under` is the chapter colour seen
+// around it while it settles.
+export function SheetSection({ chapter, under, className = "", children, ...rest }) {
+  const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 35%"] });
+  const radius = useTransform(scrollYProgress, [0, 1], [56, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
 
   return (
-    <motion.div initial="covered" animate="reveal" exit="cover">
-      <motion.div variants={pageContent}>{children}</motion.div>
-      <motion.div className="curtain curtainSignal" variants={curtainSignal} aria-hidden="true" />
-      <motion.div className="curtain curtainInk" variants={curtainInk} aria-hidden="true">
-        <span className="curtainMask">
-          <motion.span className="curtainLabel" variants={curtainLabel}>{label}</motion.span>
-        </span>
-      </motion.div>
-    </motion.div>
+    <div className="sheetUnder" data-chapter={under}>
+      <motion.section
+        ref={ref}
+        className={`chapter sheet ${className}`}
+        data-chapter={chapter}
+        style={reduceMotion ? undefined : { borderTopLeftRadius: radius, borderTopRightRadius: radius, scale }}
+        {...rest}
+      >
+        {children}
+      </motion.section>
+    </div>
   );
 }
 
@@ -159,13 +122,15 @@ const charVariants = {
   show: { y: "0%", transition: { duration: 0.9, ease: EXPO } },
 };
 
-// Character rise, kept for the one- and two-word name lines.
-export function KineticText({ text, as = "span", className = "", delay = 0, gap = STAGGER.char }) {
+// Character rise, for the name lines in the hero and the footer.
+export function KineticText({ text, as = "span", className = "", delay = 0, gap = STAGGER.char, inView = false }) {
   const Tag = motion[as];
+  const initial = useHiddenStart("hidden");
   const words = text.split(" ");
+  const trigger = inView ? { whileInView: "show", viewport: HEADING_VIEWPORT } : { animate: "show" };
 
   return (
-    <Tag className={`kinetic ${className}`} initial="hidden" animate="show" variants={staggerVariants(gap, delay)}>
+    <Tag className={`kinetic ${className}`} initial={initial} variants={staggerVariants(gap, delay)} {...trigger}>
       <span className="srOnly">{text}</span>
       {words.map((word, wordIndex) => (
         <span key={`${word}-${wordIndex}`} aria-hidden="true">
@@ -281,53 +246,6 @@ export function InkFill({ text, as = "p", className = "" }) {
         </span>
       ))}
     </Tag>
-  );
-}
-
-const wrap = (min, max, value) => {
-  const range = max - min;
-  return ((((value - min) % range) + range) % range) + min;
-};
-
-// One line of large type that travels sideways forever, faster and skewed while
-// the page is scrolled, paused on hover, off screen and under reduced motion.
-export function VelocityMarquee({ items, speed = 2.4, direction = 1, className = "" }) {
-  const ref = useRef(null);
-  const inView = useInView(ref);
-  const reduceMotion = useReducedMotion();
-  const [paused, setPaused] = useState(false);
-  const baseX = useMotionValue(0);
-  const { scrollY } = useScroll();
-  const velocity = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
-  const boost = useTransform(velocity, [-1500, 0, 1500], [4, 0, 4], { clamp: false });
-  const skewX = useTransform(velocity, [-2000, 2000], [6, -6], { clamp: true });
-  const x = useTransform(baseX, (value) => `${wrap(-50, 0, value)}%`);
-
-  useAnimationFrame((_, delta) => {
-    if (reduceMotion || paused || !inView) {
-      return;
-    }
-    const step = direction * -speed * (delta / 1000);
-    baseX.set(baseX.get() + step + step * boost.get());
-  });
-
-  return (
-    <div
-      ref={ref}
-      className={`marquee ${className}`}
-      onPointerEnter={() => setPaused(true)}
-      onPointerLeave={() => setPaused(false)}
-    >
-      <motion.div className="marqueeTrack" style={{ x, skewX: reduceMotion ? 0 : skewX }}>
-        {[0, 1].map((copy) => (
-          <ul className="marqueeList" key={copy} aria-hidden={copy === 1}>
-            {items.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        ))}
-      </motion.div>
-    </div>
   );
 }
 

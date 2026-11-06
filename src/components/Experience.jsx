@@ -47,7 +47,7 @@ export default function Experience({ text }) {
 
   return (
     <>
-      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="teal" />
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="slate" />
 
       <section className="chapter experience" data-chapter="paper">
         <div className="wrap expGrid">

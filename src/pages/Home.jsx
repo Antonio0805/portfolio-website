@@ -10,14 +10,14 @@ import {
   RollText,
   RollingFigure,
   Stagger,
+  SheetSection,
   StaggerItem,
-  VelocityMarquee,
   WordReveal,
 } from "../components/Motion";
-import { EXPO } from "../lib/motion";
+import { EXPO, IN_OUT } from "../lib/motion";
 import { projectImage } from "../lib/media";
 import { useHiddenStart } from "../lib/useHiddenStart";
-import { ArrowRight } from "../components/Icons";
+import { ArrowRight, ArrowUpRight, DownloadIcon } from "../components/Icons";
 
 const ParticleField = lazy(() => import("../components/ParticleField"));
 
@@ -47,7 +47,7 @@ const STEP_SVH = 80;
 
 // The hero and the four "model" captions scroll over one held canvas. The field
 // reaches each caption's shape as that caption crosses the middle of the screen.
-function FieldScene({ text, live, onFail }) {
+function FieldScene({ text, cvLabel, live, onFail }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const steps = text.summary.length;
@@ -100,14 +100,16 @@ function FieldScene({ text, live, onFail }) {
             </div>
             <div className="ctaRow">
               <Magnetic>
-                <Link className="btn primary" to="/projects">
-                  <RollText>{text.ctaProjects}</RollText>
-                  <ArrowRight />
-                </Link>
+                <a className="btn primary cvBtn" href="/cv.pdf" target="_blank" rel="noreferrer">
+                  <DownloadIcon />
+                  <RollText>{cvLabel}</RollText>
+                  <span className="cvTag">PDF</span>
+                </a>
               </Magnetic>
               <Magnetic>
-                <Link className="btn ghost" to="/experience">
-                  <RollText>{text.ctaExperience}</RollText>
+                <Link className="btn ghost" to="/projects">
+                  <RollText>{text.ctaProjects}</RollText>
+                  <ArrowRight />
                 </Link>
               </Magnetic>
             </div>
@@ -141,11 +143,13 @@ function FieldScene({ text, live, onFail }) {
               viewport={{ amount: 0.6 }}
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
             >
-              <motion.h3 className="stepTitle" variants={captionParts}>{item.title}</motion.h3>
-              <motion.p className="stepText" variants={captionParts}>{item.text}</motion.p>
-              <motion.span className="stepCount" variants={captionParts}>
-                {index + 1}/{text.summary.length}
-              </motion.span>
+              <div className="stepCard">
+                <motion.h3 className="stepTitle" variants={captionParts}>{item.title}</motion.h3>
+                <motion.p className="stepText" variants={captionParts}>{item.text}</motion.p>
+                <motion.span className="stepCount" variants={captionParts}>
+                  {index + 1}/{text.summary.length}
+                </motion.span>
+              </div>
             </motion.li>
           ))}
         </ol>
@@ -160,7 +164,7 @@ function FieldScene({ text, live, onFail }) {
 
 function About({ text, title }) {
   return (
-    <section className="chapter about" data-chapter="paper">
+    <SheetSection className="about" chapter="paper" under="ink">
       <div className="wrap aboutGrid">
         <WordReveal as="h2" className="sectionTitle aboutTitle" text={title} inView />
         <div className="aboutCopy">
@@ -181,7 +185,7 @@ function About({ text, title }) {
         </div>
       </div>
 
-      <div className="figures" data-chapter="teal">
+      <div className="figures" data-chapter="slate">
         <Stagger as="ul" className="wrap figureGrid" gap={0.09}>
           {text.points.map((point) => (
             <StaggerItem as="li" className="figure" key={point.value + point.label}>
@@ -191,7 +195,67 @@ function About({ text, title }) {
           ))}
         </Stagger>
       </div>
-    </section>
+    </SheetSection>
+  );
+}
+
+const CV_LINKS = [
+  { to: "/experience", key: "experience" },
+  { to: "/projects", key: "projects" },
+  { to: "/skills", key: "skills" },
+  { to: "/education", key: "education" },
+];
+
+// The CV, shown as the document it is: its first page tilts up into place as
+// the section arrives and straightens under the pointer.
+function CvSection({ nav, text }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
+  const rotate = useTransform(scrollYProgress, [0, 1], [-9, -3]);
+  const y = useTransform(scrollYProgress, [0, 1], [140, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.88, 1]);
+
+  return (
+    <SheetSection className="cvSection" chapter="mist" under="slate">
+      <div ref={ref} className="wrap cvGrid">
+        <div className="cvCopy">
+          <WordReveal as="h2" className="sectionTitle" text={nav.downloadCv} inView />
+          <Reveal as="p" className="cvLead" delay={0.05}>{text.badge}</Reveal>
+          <Reveal className="ctaRow" delay={0.1}>
+            <Magnetic>
+              <a className="btn primary cvBtn cvBtnLarge" href="/cv.pdf" target="_blank" rel="noreferrer">
+                <DownloadIcon />
+                <RollText>{nav.downloadCv}</RollText>
+                <span className="cvTag">PDF</span>
+              </a>
+            </Magnetic>
+          </Reveal>
+          <Stagger as="ul" className="cvJump" delay={0.15}>
+            {CV_LINKS.map(({ to, key }) => (
+              <StaggerItem as="li" key={to}>
+                <Link to={to}>
+                  <RollText>{nav[key]}</RollText>
+                  <ArrowUpRight />
+                </Link>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+
+        <motion.a
+          className="cvPreview"
+          href="/cv.pdf"
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`${nav.downloadCv} (PDF)`}
+          style={{ rotate, y, scale }}
+        >
+          <span className="cvPaper">
+            <img src="/cv-preview.jpg" alt="First page of Antonio-Ștefan Smărăndescu's CV" loading="lazy" />
+          </span>
+        </motion.a>
+      </div>
+    </SheetSection>
   );
 }
 
@@ -278,7 +342,7 @@ function Work({ projects, cta }) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, ease: EXPO, delay: Math.min(index, 4) * 0.07 }}
               >
-                <Link to="/projects" data-cursor="open" onFocus={() => onFocusCard(index)}>
+                <Link to="/projects" onFocus={() => onFocusCard(index)}>
                   <span className="workMedia">
                     <img
                       src={project.image}
@@ -301,7 +365,7 @@ function Work({ projects, cta }) {
 
 function Focus({ text }) {
   return (
-    <section className="chapter focus" data-chapter="paper">
+    <SheetSection className="focus" chapter="paper" under="ink">
       <div className="wrap focusGrid">
         <Reveal as="p" className="sideLabel">{text.focusEyebrow}</Reveal>
         <div>
@@ -314,20 +378,30 @@ function Focus({ text }) {
           </Stagger>
         </div>
       </div>
-    </section>
+    </SheetSection>
   );
 }
 
+// Each tool is drawn open from its left edge, one after another.
+const chipIn = {
+  hidden: { clipPath: "inset(0% 100% 0% 0% round 999px)" },
+  show: { clipPath: "inset(0% 0% 0% 0% round 999px)", transition: { duration: 0.7, ease: IN_OUT } },
+};
+
 function Stack({ label, items }) {
-  const half = Math.ceil(items.length / 2);
   return (
-    <section className="chapter stack" data-chapter="teal">
-      <div className="wrap">
+    <SheetSection className="stack" chapter="slate" under="paper">
+      <div className="wrap stackGrid">
         <WordReveal as="h2" className="sectionTitle" text={label} inView />
+        <Stagger as="ul" className="stackList" gap={0.045}>
+          {items.map((item) => (
+            <StaggerItem as="li" key={item} className="stackItem" variants={chipIn}>
+              {item}
+            </StaggerItem>
+          ))}
+        </Stagger>
       </div>
-      <VelocityMarquee className="marqueeLarge" items={items.slice(0, half)} direction={1} />
-      <VelocityMarquee className="marqueeLarge marqueeSoft" items={items.slice(half)} direction={-1} speed={2} />
-    </section>
+    </SheetSection>
   );
 }
 
@@ -338,8 +412,9 @@ export default function Home({ text, nav, projects }) {
 
   return (
     <main className="siteMain">
-      <FieldScene text={text} live={webgl && !reduceMotion} onFail={onFail} />
+      <FieldScene text={text} cvLabel={nav.downloadCv} live={webgl && !reduceMotion} onFail={onFail} />
       <About text={text} title={nav.about} />
+      <CvSection nav={nav} text={text} />
       <Work projects={projects} cta={text.ctaProjects} />
       <Focus text={text} />
       <Stack label={text.stackLabel} items={text.stack} />

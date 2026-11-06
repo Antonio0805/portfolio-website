@@ -69,7 +69,7 @@ export default function Education({ text }) {
             key={item.school + item.time}
             {...item}
             label={text.label}
-            chapter={index % 2 ? "teal" : "ink"}
+            chapter={index % 2 ? "slate" : "ink"}
             photo={PHOTOS[index]}
           />
         ))}

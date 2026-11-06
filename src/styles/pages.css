@@ -409,9 +409,9 @@
 @media (hover: hover) {
   .indexRow:hover {
     --fg: var(--c-paper);
-    --fg-soft: rgb(233 232 227 / 0.72);
+    --fg-soft: rgb(244 244 241 / 0.72);
     --bg-2: var(--c-ink-2);
-    --accent: var(--c-signal);
+    --accent: var(--c-teal-light);
     --on-accent: var(--c-ink);
     color: var(--fg);
   }
@@ -740,7 +740,7 @@
   position: absolute;
   inset: 0 calc(-1 * var(--gutter));
   z-index: -1;
-  background: var(--c-signal);
+  background: var(--c-teal-light);
   transform: scaleY(0);
   transform-origin: 50% 0;
   transition: transform 560ms var(--ease-in-out);
@@ -749,8 +749,8 @@
 @media (hover: hover) {
   .contactRow:hover {
     --fg: var(--c-ink);
-    --fg-soft: rgb(11 12 11 / 0.74);
-    --bg-2: var(--c-signal-2);
+    --fg-soft: rgb(16 21 28 / 0.74);
+    --bg-2: rgb(16 21 28 / 0.12);
     color: var(--fg);
   }
 

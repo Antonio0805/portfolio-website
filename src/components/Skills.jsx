@@ -23,7 +23,7 @@ export default function Skills({ text }) {
 
   return (
     <>
-      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="teal" />
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="slate" />
 
       <section className="chapter skills" data-chapter="ink">
         <div className="wrap">

@@ -286,9 +286,9 @@ export default function ParticleField({ morph, onFail }) {
         uAspect: { value: 1 },
         uPointer: { value: new THREE.Vector2(9, 9) },
         uPointerForce: { value: 0 },
-        uColor: { value: new THREE.Color("#e9e8e3") },
-        uTintColor: { value: new THREE.Color("#3fc4b4") },
-        uHeatColor: { value: new THREE.Color("#c8f560") },
+        uColor: { value: new THREE.Color("#f4f4f1") },
+        uTintColor: { value: new THREE.Color("#6ccfc0") },
+        uHeatColor: { value: new THREE.Color("#ee8467") },
         uOpacity: { value: narrow ? 0.5 : 0.62 },
       },
     });

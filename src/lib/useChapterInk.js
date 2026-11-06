@@ -27,13 +27,14 @@ export function useChapterInk(probeY = 36, deps = []) {
     };
 
     schedule();
-    // The route curtain moves the page while it settles; read again once it has.
-    const settle = setTimeout(schedule, 1100);
+    // A new page arrives after the old one has faded out (about 250ms) and then
+    // settles; read again as it appears and once it has come to rest.
+    const settles = [300, 650, 1000].map((ms) => setTimeout(schedule, ms));
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     return () => {
       cancelAnimationFrame(frame);
-      clearTimeout(settle);
+      settles.forEach(clearTimeout);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };

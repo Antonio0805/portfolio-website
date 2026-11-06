@@ -1,14 +1,19 @@
 :root {
-  /* Chapter colours: each section is one flat field, cut hard against the next. */
-  --c-ink: #0b0c0b;
-  --c-ink-2: #1a1c1a;
-  --c-paper: #e9e8e3;
-  --c-paper-2: #dad9d2;
-  --c-teal: #095850;
-  --c-teal-2: #0b4a43;
-  --c-cream: #f1f1ed;
-  --c-signal: #c8f560;
-  --c-signal-2: #b6e44c;
+  /* A professional palette taken from the CV itself: deep ink, cool white,
+     the CV's slate sidebar and a pale mist, with teal as the only accent and
+     a warm coral kept for one or two small live marks. Each section is one
+     flat field, cut hard against the next. */
+  --c-ink: #10151c;
+  --c-ink-2: #1c232d;
+  --c-paper: #f4f4f1;
+  --c-paper-2: #e4e6e3;
+  --c-slate: #3d4856;
+  --c-slate-2: #4a5666;
+  --c-mist: #dfe6ea;
+  --c-mist-2: #ccd6dc;
+  --c-teal: #0f6e66;
+  --c-teal-light: #6ccfc0;
+  --c-coral: #ee8467;
 
   --font-display: "Bricolage Grotesque", "Manrope", system-ui, sans-serif;
   --font-body: "Manrope", system-ui, sans-serif;
@@ -38,8 +43,8 @@
   --bg: var(--c-ink);
   --bg-2: var(--c-ink-2);
   --fg: var(--c-paper);
-  --fg-soft: rgb(233 232 227 / 0.72);
-  --accent: var(--c-signal);
+  --fg-soft: rgb(244 244 241 / 0.72);
+  --accent: var(--c-teal-light);
   --on-accent: var(--c-ink);
 }
 
@@ -47,25 +52,25 @@
   --bg: var(--c-paper);
   --bg-2: var(--c-paper-2);
   --fg: var(--c-ink);
-  --fg-soft: rgb(11 12 11 / 0.7);
+  --fg-soft: rgb(16 21 28 / 0.68);
   --accent: var(--c-teal);
-  --on-accent: var(--c-cream);
+  --on-accent: var(--c-paper);
 }
 
-[data-chapter="teal"] {
-  --bg: var(--c-teal);
-  --bg-2: var(--c-teal-2);
-  --fg: var(--c-cream);
-  --fg-soft: rgb(241 241 237 / 0.8);
-  --accent: var(--c-signal);
+[data-chapter="slate"] {
+  --bg: var(--c-slate);
+  --bg-2: var(--c-slate-2);
+  --fg: var(--c-paper);
+  --fg-soft: rgb(244 244 241 / 0.8);
+  --accent: var(--c-teal-light);
   --on-accent: var(--c-ink);
 }
 
-[data-chapter="signal"] {
-  --bg: var(--c-signal);
-  --bg-2: var(--c-signal-2);
+[data-chapter="mist"] {
+  --bg: var(--c-mist);
+  --bg-2: var(--c-mist-2);
   --fg: var(--c-ink);
-  --fg-soft: rgb(11 12 11 / 0.74);
-  --accent: var(--c-ink);
-  --on-accent: var(--c-signal);
+  --fg-soft: rgb(16 21 28 / 0.7);
+  --accent: var(--c-teal);
+  --on-accent: var(--c-paper);
 }

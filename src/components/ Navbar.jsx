@@ -56,22 +56,16 @@ function LangSwitch({ language, setLanguage, navText, layoutId }) {
 export default function Navbar({ language, setLanguage, navText }) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const [solid, setSolid] = useState(false);
   const menuRef = useRef(null);
   const burgerRef = useRef(null);
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.3 });
   const chapter = useChapterInk(36, [pathname]);
 
-  // Hidden while reading downwards, back as soon as the visitor scrolls up.
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    if (latest > 160 && latest > previous + 2) {
-      setHidden(true);
-    } else if (latest < previous - 2 || latest <= 160) {
-      setHidden(false);
-    }
-  });
+  // Always on screen; once the page moves it takes a solid ground in the
+  // colour of the chapter beneath, so the links and the CV stay readable.
+  useMotionValueEvent(scrollY, "change", (latest) => setSolid(latest > 24));
 
   useEffect(() => {
     lockScroll(open);
@@ -111,10 +105,11 @@ export default function Navbar({ language, setLanguage, navText }) {
   return (
     <>
       <motion.header
-        className={`nav${open ? " menuOpen" : ""}`}
+        className={`nav${open ? " menuOpen" : ""}${solid && !open ? " isSolid" : ""}`}
         data-chapter={open ? "ink" : chapter}
-        animate={{ y: hidden && !open ? "-110%" : "0%" }}
-        transition={{ duration: 0.45, ease: IN_OUT }}
+        initial={{ y: "-100%" }}
+        animate={{ y: "0%" }}
+        transition={{ duration: 0.8, ease: IN_OUT, delay: 0.2 }}
       >
         <motion.div className="scrollProgress" style={{ scaleX: progress }} aria-hidden="true" />
 
@@ -142,13 +137,14 @@ export default function Navbar({ language, setLanguage, navText }) {
 
           <div className="navActions desktopOnly">
             <LangSwitch language={language} setLanguage={setLanguage} navText={navText} layoutId="langDesktop" />
-            <a className="btn small primary" href="/cv.pdf" target="_blank" rel="noreferrer">
+            <a className="btn small primary cvBtn" href="/cv.pdf" target="_blank" rel="noreferrer">
               <DownloadIcon />
               <RollText>{navText.downloadCv}</RollText>
+              <span className="cvTag">PDF</span>
             </a>
           </div>
 
-          <a className="btn small primary navCv mobileOnly" href="/cv.pdf" target="_blank" rel="noreferrer">
+          <a className="btn small primary cvBtn navCv mobileOnly" href="/cv.pdf" target="_blank" rel="noreferrer">
             <DownloadIcon />
             <span>{navText.downloadCv}</span>
           </a>

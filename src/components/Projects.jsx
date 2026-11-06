@@ -11,7 +11,7 @@ function Actions({ project, text, liveLabel }) {
   return (
     <div className="projectActions">
       {project.github ? (
-        <a className="btn small" href={project.github} target="_blank" rel="noreferrer" data-cursor="open">
+        <a className="btn small" href={project.github} target="_blank" rel="noreferrer">
           <GitHubIcon />
           <RollText>{text.github}</RollText>
         </a>
@@ -20,12 +20,12 @@ function Actions({ project, text, liveLabel }) {
       {!project.demo ? (
         <span className="smallNote">{text.demoSoon}</span>
       ) : isYouTubeUrl(project.demo) ? (
-        <a className="btn small primary" href={project.demo} target="_blank" rel="noreferrer" data-cursor="play">
+        <a className="btn small primary" href={project.demo} target="_blank" rel="noreferrer">
           <YouTubeIcon />
           <RollText>YouTube</RollText>
         </a>
       ) : (
-        <a className="btn small primary" href={project.demo} target="_blank" rel="noreferrer" data-cursor="open">
+        <a className="btn small primary" href={project.demo} target="_blank" rel="noreferrer">
           <ExternalIcon />
           <RollText>{liveLabel}</RollText>
         </a>
@@ -108,7 +108,7 @@ function Showcase({ project, text }) {
   const images = project.showcaseImages || [];
 
   return (
-    <section ref={ref} className="chapter showcase" data-chapter="teal">
+    <section ref={ref} className="chapter showcase" data-chapter="slate">
       <div className="wrap showcaseGrid">
         <div className="showcaseCopy">
           <WordReveal as="h2" className="sectionTitle showcaseTitle" text={project.title} inView />
