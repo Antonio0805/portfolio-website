@@ -1,7 +1,11 @@
-import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
-import { EASE, SPRING } from "../lib/motion";
+import { NavLink, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
+import { EXPO, IN_OUT, SPRING } from "../lib/motion";
+import { lockScroll } from "../lib/smoothScroll";
+import { useChapterInk } from "../lib/useChapterInk";
+import { RollText } from "./Motion";
+import { DownloadIcon } from "./Icons";
 
 const NAV_ITEMS = [
   { to: "/", key: "about" },
@@ -12,34 +16,24 @@ const NAV_ITEMS = [
   { to: "/contact", key: "contact" },
 ];
 
-const drawerList = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.05, delayChildren: 0.12 } },
+const menuPanel = {
+  closed: { clipPath: "circle(0% at calc(100% - 44px) 40px)", transition: { duration: 0.55, ease: IN_OUT } },
+  open: { clipPath: "circle(150% at calc(100% - 44px) 40px)", transition: { duration: 0.8, ease: IN_OUT } },
 };
 
-const drawerItem = {
-  hidden: { opacity: 0, x: 24 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.4, ease: EASE } },
+const menuList = {
+  closed: {},
+  open: { transition: { staggerChildren: 0.06, delayChildren: 0.25 } },
 };
 
-const DownloadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M12 3v12" />
-    <path d="m7 10 5 5 5-5" />
-    <path d="M5 21h14" />
-  </svg>
-);
+const menuItem = {
+  closed: { y: "110%" },
+  open: { y: "0%", transition: { duration: 0.8, ease: EXPO } },
+};
 
-const CloseIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-    <path d="M18 6 6 18" />
-    <path d="m6 6 12 12" />
-  </svg>
-);
-
-function LangSwitch({ language, setLanguage, navText, className, layoutId }) {
+function LangSwitch({ language, setLanguage, navText, layoutId }) {
   return (
-    <div className={className} role="group" aria-label="Language switch">
+    <div className="langSwitch" role="group" aria-label="Language switch">
       {["ro", "en"].map((code) => {
         const active = language === code;
         return (
@@ -50,8 +44,8 @@ function LangSwitch({ language, setLanguage, navText, className, layoutId }) {
             aria-pressed={active}
             onClick={() => setLanguage(code)}
           >
-            {active ? <motion.span layoutId={layoutId} className="langActivePill" transition={SPRING} /> : null}
-            <span className="navLabel">{code === "ro" ? navText.langRo : navText.langEn}</span>
+            {active ? <motion.span layoutId={layoutId} className="langActive" transition={SPRING} /> : null}
+            <span className="langLabel">{code === "ro" ? navText.langRo : navText.langEn}</span>
           </button>
         );
       })}
@@ -60,16 +54,28 @@ function LangSwitch({ language, setLanguage, navText, className, layoutId }) {
 }
 
 export default function Navbar({ language, setLanguage, navText }) {
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const menuRef = useRef(null);
+  const burgerRef = useRef(null);
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.3 });
+  const chapter = useChapterInk(36, [pathname]);
 
-  useMotionValueEvent(scrollY, "change", (latest) => setScrolled(latest > 12));
+  // Hidden while reading downwards, back as soon as the visitor scrolls up.
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > 160 && latest > previous + 2) {
+      setHidden(true);
+    } else if (latest < previous - 2 || latest <= 160) {
+      setHidden(false);
+    }
+  });
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => (document.body.style.overflow = "");
+    lockScroll(open);
+    return () => lockScroll(false);
   }, [open]);
 
   useEffect(() => {
@@ -77,9 +83,22 @@ export default function Navbar({ language, setLanguage, navText }) {
       return undefined;
     }
 
+    const menu = menuRef.current;
+    const focusables = () => Array.from(menu.querySelectorAll("a, button"));
+    focusables()[0]?.focus();
+
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
         setOpen(false);
+        burgerRef.current?.focus();
+        return;
+      }
+      if (event.key === "Tab") {
+        const items = [burgerRef.current, ...focusables()];
+        const index = items.indexOf(document.activeElement);
+        const next = event.shiftKey ? index - 1 : index + 1;
+        event.preventDefault();
+        items[(next + items.length) % items.length]?.focus();
       }
     };
 
@@ -90,116 +109,106 @@ export default function Navbar({ language, setLanguage, navText }) {
   const close = () => setOpen(false);
 
   return (
-    <motion.header
-      className={`nav${scrolled ? " scrolled" : ""}`}
-      initial={{ opacity: 0, y: -24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: EASE }}
-    >
-      <motion.div className="scrollProgress" style={{ scaleX: progress }} aria-hidden="true" />
+    <>
+      <motion.header
+        className={`nav${open ? " menuOpen" : ""}`}
+        data-chapter={open ? "ink" : chapter}
+        animate={{ y: hidden && !open ? "-110%" : "0%" }}
+        transition={{ duration: 0.45, ease: IN_OUT }}
+      >
+        <motion.div className="scrollProgress" style={{ scaleX: progress }} aria-hidden="true" />
 
-      <div className="navInner">
-        <NavLink to="/" className="brandBlock" aria-label="Antonio Smarandescu, home">
-          <span className="brandMark" aria-hidden="true">AS</span>
-          <span className="brandText">
-            <span className="brand">Antonio Smarandescu</span>
-            <span className="brandMeta">SAP Analytics • Data • Automation</span>
-          </span>
-        </NavLink>
+        <div className="navInner wrap">
+          <NavLink to="/" className="brandBlock" aria-label="Antonio Smarandescu, home" onClick={close}>
+            <span className="brandMark" aria-hidden="true">AS</span>
+            <span className="brandText">
+              <span className="brand">Antonio Smarandescu</span>
+              <span className="brandMeta">SAP Analytics • Data • Automation</span>
+            </span>
+          </NavLink>
 
-        <nav className="links desktopOnly">
-          {NAV_ITEMS.map(({ to, key }) => (
-            <NavLink key={to} to={to} end={to === "/"} className="navLink">
-              {({ isActive }) => (
-                <>
-                  {isActive ? <motion.span layoutId="navActive" className="navActivePill" transition={SPRING} /> : null}
-                  <span className="navLabel">{navText[key]}</span>
-                </>
-              )}
-            </NavLink>
-          ))}
+          <nav className="links desktopOnly" aria-label="Primary">
+            {NAV_ITEMS.map(({ to, key }) => (
+              <NavLink key={to} to={to} end={to === "/"} className="navLink">
+                {({ isActive }) => (
+                  <>
+                    <RollText>{navText[key]}</RollText>
+                    {isActive ? <motion.span layoutId="navActive" className="navActive" transition={SPRING} /> : null}
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </nav>
 
-          <LangSwitch
-            className="langSwitch"
-            layoutId="langDesktop"
-            language={language}
-            setLanguage={setLanguage}
-            navText={navText}
-          />
+          <div className="navActions desktopOnly">
+            <LangSwitch language={language} setLanguage={setLanguage} navText={navText} layoutId="langDesktop" />
+            <a className="btn small primary" href="/cv.pdf" target="_blank" rel="noreferrer">
+              <DownloadIcon />
+              <RollText>{navText.downloadCv}</RollText>
+            </a>
+          </div>
 
-          <a className="navBtn cvDownloadBtn" href="/cv.pdf" target="_blank" rel="noreferrer">
+          <a className="btn small primary navCv mobileOnly" href="/cv.pdf" target="_blank" rel="noreferrer">
             <DownloadIcon />
             <span>{navText.downloadCv}</span>
           </a>
-        </nav>
 
-        <button
-          className="hamburger mobileOnly"
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className={`bar ${open ? "x1" : ""}`} />
-          <span className={`bar ${open ? "x2" : ""}`} />
-          <span className={`bar ${open ? "x3" : ""}`} />
-        </button>
-      </div>
-
-      <div className={`overlay ${open ? "show" : ""}`} onClick={close} />
-
-      <aside
-        id="mobile-menu"
-        className={`drawer ${open ? "open" : ""}`}
-        aria-hidden={!open}
-        inert={!open}
-      >
-        <div className="drawerTop">
-          <div className="drawerTitle">
-            <strong>{navText.navigation}</strong>
-            <span>{navText.navigationHint}</span>
-          </div>
           <button
-            className="closeBtn"
+            ref={burgerRef}
+            className="burger mobileOnly"
             type="button"
-            aria-label="Close menu"
-            onClick={close}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((value) => !value)}
           >
-            <CloseIcon />
+            <span className={`burgerBar${open ? " open" : ""}`} />
+            <span className={`burgerBar${open ? " open" : ""}`} />
           </button>
         </div>
+      </motion.header>
 
-        <motion.nav
-          className="drawerLinks"
-          initial="hidden"
-          animate={open ? "show" : "hidden"}
-          variants={drawerList}
-        >
-          {NAV_ITEMS.map(({ to, key }) => (
-            <motion.div key={to} variants={drawerItem}>
-              <NavLink to={to} end={to === "/"} onClick={close}>{navText[key]}</NavLink>
-            </motion.div>
-          ))}
-
-          <motion.div variants={drawerItem}>
-            <LangSwitch
-              className="drawerLangSwitch"
-              layoutId="langDrawer"
-              language={language}
-              setLanguage={setLanguage}
-              navText={navText}
-            />
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            id="mobile-menu"
+            ref={menuRef}
+            className="menu"
+            data-chapter="ink"
+            role="dialog"
+            aria-modal="true"
+            aria-label={navText.navigation}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuPanel}
+          >
+            <div className="menuInner wrap">
+              <p className="menuHint">{navText.navigationHint}</p>
+              <motion.ul className="menuLinks" variants={menuList}>
+                {NAV_ITEMS.map(({ to, key }) => (
+                  <li key={to} className="menuLinkMask">
+                    <motion.span variants={menuItem} className="menuLinkInner">
+                      <NavLink to={to} end={to === "/"} onClick={close}>{navText[key]}</NavLink>
+                    </motion.span>
+                  </li>
+                ))}
+              </motion.ul>
+              <motion.div
+                className="menuFoot"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease: EXPO, delay: 0.6 } }}
+              >
+                <LangSwitch language={language} setLanguage={setLanguage} navText={navText} layoutId="langMenu" />
+                <a className="btn primary" href="/cv.pdf" target="_blank" rel="noreferrer" onClick={close}>
+                  <DownloadIcon />
+                  <span>{navText.downloadCv}</span>
+                </a>
+              </motion.div>
+            </div>
           </motion.div>
-
-          <motion.div variants={drawerItem}>
-            <a className="drawerBtn cvDownloadBtn" href="/cv.pdf" target="_blank" rel="noreferrer" onClick={close}>
-              <DownloadIcon />
-              <span>{navText.downloadCv}</span>
-            </a>
-          </motion.div>
-        </motion.nav>
-      </aside>
-    </motion.header>
+        ) : null}
+      </AnimatePresence>
+    </>
   );
 }

@@ -1,48 +1,79 @@
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 import SectionHead from "./SectionHead";
-import { Timeline, TimelineItem } from "./Motion";
+import { Reveal, RollingFigure, WordReveal } from "./Motion";
 
-function Edu({ school, program, time, detail, label, current, status }) {
+// Photographs of the university, from Wikimedia Commons, one per sheet.
+const PHOTOS = [
+  {
+    src: "/upb-rectorate.jpg",
+    alt: "The Rectorate building of Politehnica University of Bucharest",
+    credit: "CristianChirita, public domain, via Wikimedia Commons",
+    page: "https://commons.wikimedia.org/wiki/File:Universitatea_Politehnica_din_Bucure%C8%99ti-2006_0604UPB0032.jpg",
+  },
+  {
+    src: "/upb-campus.jpg",
+    alt: "The Politehnica University of Bucharest campus in winter",
+    credit: "Mister rf, CC BY-SA 4.0, via Wikimedia Commons",
+    page: "https://commons.wikimedia.org/wiki/File:Politehnica_University_of_Bucharest_07.jpg",
+  },
+];
+
+// Each degree is its own chapter: the years roll up, the photograph opens
+// from a window as it arrives and drifts inside its frame.
+function Sheet({ school, program, time, detail, label, current, status, chapter, photo }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const clipPath = useTransform(scrollYProgress, [0.05, 0.4], ["inset(18% 18% 18% 18%)", "inset(0% 0% 0% 0%)"]);
+
   return (
-    <TimelineItem active={current}>
-      <div className="card eduCard timelineCard educationCard spotlight">
-        <div className="timelineTagRow">
-          <span className="pill timelineTag">{label}</span>
-          {status ? (
-            <span className={`currentBadge${current ? "" : " doneBadge"}`}>
-              <span className="currentDot" aria-hidden="true" />
-              {status}
-            </span>
-          ) : null}
+    <article ref={ref} className="chapter eduSheet" data-chapter={chapter}>
+      <div className="wrap eduInner">
+        <RollingFigure className="eduYears" value={time} />
+        <div className="eduText">
+          <WordReveal as="h2" className="eduSchool" text={school} inView />
+          <Reveal as="p" className="eduProgram" delay={0.1}>{program}</Reveal>
+          <Reveal as="p" className="eduMeta" delay={0.15}>
+            <span>{label} · {detail}</span>
+            {status ? (
+              <span className={`statusTag${current ? "" : " isDone"}`}>
+                {current ? <span className="liveDot" aria-hidden="true" /> : null}
+                {status}
+              </span>
+            ) : null}
+          </Reveal>
         </div>
-        <div className="timelineTop">
-          <span className="cardMeta">{time}</span>
-          <div>
-            <h3 className="cardTitle">{school}</h3>
-            <p className="muted">{program}</p>
-          </div>
-        </div>
-        <div className="eduFooter">
-          <span className="muted">{detail}</span>
-        </div>
+        {photo ? (
+          <figure className="eduPhoto">
+            <motion.span className="eduPhotoFrame" style={{ clipPath }}>
+              <motion.img src={photo.src} alt={photo.alt} loading="lazy" style={{ y: imageY }} />
+            </motion.span>
+            <figcaption>
+              <a href={photo.page} target="_blank" rel="noreferrer">{photo.credit}</a>
+            </figcaption>
+          </figure>
+        ) : null}
       </div>
-    </TimelineItem>
+    </article>
   );
 }
 
 export default function Education({ text }) {
   return (
-    <section id="education" className="section">
-      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} />
-
-      <Timeline>
-        {text.items.map((item) => (
-          <Edu
+    <>
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="paper" />
+      <section className="education" aria-label={text.title}>
+        {text.items.map((item, index) => (
+          <Sheet
             key={item.school + item.time}
             {...item}
             label={text.label}
+            chapter={index % 2 ? "teal" : "ink"}
+            photo={PHOTOS[index]}
           />
         ))}
-      </Timeline>
-    </section>
+      </section>
+    </>
   );
 }

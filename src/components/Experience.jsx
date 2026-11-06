@@ -1,77 +1,100 @@
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import SectionHead from "./SectionHead";
-import { Stagger, StaggerItem, Timeline, TimelineItem } from "./Motion";
-import { slideIn } from "../lib/motion";
+import { Reveal, ScrollProgressLine, Stagger, StaggerItem, WordReveal } from "./Motion";
+import { IN_OUT, slideIn } from "../lib/motion";
 
-const COMPANY_PALETTE = [
-  "linear-gradient(135deg, #0b5f59, #2563eb)",
-  "linear-gradient(135deg, #7c3aed, #ec4899)",
-  "linear-gradient(135deg, #ea580c, #f59e0b)",
-  "linear-gradient(135deg, #0891b2, #14b8a6)",
-  "linear-gradient(135deg, #be123c, #f43f5e)",
-];
+function Item({ role, company, time, bullets, status, index, onActive }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { margin: "-45% 0px -45% 0px" });
 
-function pickGradient(seed) {
-  let hash = 0;
-  for (let i = 0; i < seed.length; i += 1) {
-    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
-  }
-  return COMPANY_PALETTE[hash % COMPANY_PALETTE.length];
-}
+  useEffect(() => {
+    if (inView) {
+      onActive(index);
+    }
+  }, [inView, index, onActive]);
 
-function CompanyAvatar({ company }) {
-  const initial = (company || "?").trim().charAt(0).toUpperCase();
-  const background = pickGradient(company || "?");
   return (
-    <span className="companyAvatar" style={{ background }} aria-hidden="true">
-      {initial}
-    </span>
-  );
-}
-
-function Item({ role, company, time, bullets, status, tag }) {
-  return (
-    <TimelineItem active={Boolean(status)}>
-      <div className="card timelineCard experienceCard spotlight">
-        <div className="timelineTagRow">
-          <span className="pill timelineTag">{tag}</span>
+    <article ref={ref} className="expItem">
+      <WordReveal as="h2" className="expRole" text={role} inView />
+      <Reveal className="expHead" delay={0.1}>
+        <p className="expCompany">{company}</p>
+        <p className="expMeta">
+          <span>{time}</span>
           {status ? (
-            <span className="currentBadge">
-              <span className="currentDot" aria-hidden="true" />
+            <span className="statusTag">
+              <span className="liveDot" aria-hidden="true" />
               {status}
             </span>
           ) : null}
-        </div>
-        <div className="timelineTop">
-          <span className="cardMeta">{time}</span>
-          <div className="experienceHeader">
-            <CompanyAvatar company={company} />
-            <div className="experienceHeaderText">
-              <h3 className="cardTitle">{role}</h3>
-              <p className="muted">{company}</p>
-            </div>
-          </div>
-        </div>
-
-        <Stagger as="ul" className="list" gap={0.07} delay={0.25}>
-          {bullets.map((b, i) => (
-            <StaggerItem as="li" key={i} variants={slideIn}>{b}</StaggerItem>
-          ))}
-        </Stagger>
-      </div>
-    </TimelineItem>
+        </p>
+      </Reveal>
+      <Stagger as="ul" className="expBullets" gap={0.08} delay={0.2}>
+        {bullets.map((bullet) => (
+          <StaggerItem as="li" key={bullet} variants={slideIn}>{bullet}</StaggerItem>
+        ))}
+      </Stagger>
+    </article>
   );
 }
 
+// A held column names the company and dates of whichever role is in the middle
+// of the screen, rolling to the next as the list passes.
 export default function Experience({ text }) {
-  return (
-    <section id="experience" className="section">
-      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} />
+  const [active, setActive] = useState(0);
+  const listRef = useRef(null);
+  const current = text.items[active] ?? text.items[0];
 
-      <Timeline>
-        {text.items.map((item) => (
-          <Item key={item.role + item.company + item.time} {...item} tag={text.eyebrow} />
-        ))}
-      </Timeline>
-    </section>
+  return (
+    <>
+      <SectionHead eyebrow={text.eyebrow} title={text.title} lead={text.lead} chapter="teal" />
+
+      <section className="chapter experience" data-chapter="paper">
+        <div className="wrap expGrid">
+          <aside className="expAside" aria-hidden="true">
+            <div className="expAsideInner">
+              <span className="expAsideMask">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span
+                    key={current.company + current.time}
+                    className="expAsideCompany"
+                    initial={{ y: "105%" }}
+                    animate={{ y: "0%" }}
+                    exit={{ y: "-105%" }}
+                    transition={{ duration: 0.7, ease: IN_OUT }}
+                  >
+                    {current.company}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              <span className="expAsideMask">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span
+                    key={current.time}
+                    className="expAsideTime"
+                    initial={{ y: "105%" }}
+                    animate={{ y: "0%" }}
+                    exit={{ y: "-105%" }}
+                    transition={{ duration: 0.7, ease: IN_OUT, delay: 0.05 }}
+                  >
+                    {current.time}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              <span className="expAsideCount">
+                {active + 1}/{text.items.length}
+              </span>
+            </div>
+          </aside>
+
+          <div className="expList" ref={listRef}>
+            <ScrollProgressLine target={listRef} className="expProgress" />
+            {text.items.map((item, index) => (
+              <Item key={item.role + item.company + item.time} {...item} index={index} onActive={setActive} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

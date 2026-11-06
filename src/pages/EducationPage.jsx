@@ -2,7 +2,7 @@ import Education from "../components/Education";
 
 export default function EducationPage({ text }) {
   return (
-    <main className="container">
+    <main className="siteMain">
       <Education text={text} />
     </main>
   );

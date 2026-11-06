@@ -1,0 +1,617 @@
+/* ---------- Field: hero + model captions over one held canvas ---------- */
+
+.fieldStage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  overflow: clip;
+}
+
+.fieldMount,
+.fieldCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fieldContent {
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: calc(var(--nav-h) + 48px) 0 32px;
+}
+
+.heroKicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.heroName {
+  margin: 0 0 40px;
+  font-family: var(--font-display);
+  font-size: var(--step-display);
+  font-weight: 700;
+  font-variation-settings: "wdth" 88;
+  line-height: 0.86;
+  letter-spacing: -0.038em;
+}
+
+.heroLines {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heroLine {
+  display: block;
+}
+
+.heroLine + .heroLine {
+  color: var(--accent);
+}
+
+.heroFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 40px;
+}
+
+.heroRole {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.3vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.roleRotator {
+  position: relative;
+  display: inline-grid;
+  overflow: clip;
+  padding-block: 0.1em;
+  margin-block: -0.1em;
+}
+
+.roleWord {
+  grid-area: 1 / 1;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.heroMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.heroTools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.heroTools li {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fg) 10%, transparent);
+  font-size: var(--step-small);
+  font-weight: 600;
+}
+
+.scrollCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--step-small);
+  font-weight: 600;
+}
+
+.scrollCueLine {
+  position: relative;
+  width: 2px;
+  height: 36px;
+  overflow: clip;
+  background: color-mix(in srgb, var(--fg) 22%, transparent);
+}
+
+.scrollCueLine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateY(-100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scrollCueLine::after {
+    animation: cue 2.2s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.fieldStep {
+  min-height: 80svh;
+  max-width: min(640px, 46%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+}
+
+.stepCount {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6.8vw, 7.4rem);
+  font-weight: 700;
+  font-variation-settings: "wdth" 86;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+.stepText {
+  font-size: clamp(1.2rem, 1.9vw, 1.75rem);
+  line-height: 1.4;
+  max-width: 30ch;
+}
+
+.fieldEnd {
+  min-height: 80svh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10svh;
+}
+
+.fieldBadge {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+/* Without WebGL or with reduced motion the captions are a plain list. */
+.field:not(.isLive) .fieldSteps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px 48px;
+  padding-block: 64px 96px;
+}
+
+.field:not(.isLive) .fieldStep {
+  min-height: 0;
+  max-width: none;
+  justify-content: flex-start;
+}
+
+.field:not(.isLive) .stepTitle {
+  font-size: var(--step-heading);
+}
+
+.field:not(.isLive) .fieldEnd {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .heroName {
+    font-size: 15.5vw;
+  }
+}
+
+@media (max-width: 760px) {
+  .fieldStep {
+    max-width: none;
+    justify-content: flex-end;
+    padding-bottom: 14svh;
+  }
+
+  .fieldStep .stepText {
+    max-width: none;
+  }
+
+  .field:not(.isLive) .fieldSteps {
+    grid-template-columns: 1fr;
+  }
+
+  .heroMeta {
+    margin-top: 40px;
+  }
+}
+
+/* ---------- About ---------- */
+
+.about {
+  padding-top: var(--section-gap);
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 40px var(--gutter);
+  padding-bottom: var(--section-gap);
+}
+
+.aboutTitle {
+  grid-column: 1 / 5;
+}
+
+.aboutCopy {
+  grid-column: 5 / 13;
+}
+
+.statement {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  max-width: 30ch;
+  margin-bottom: 56px;
+}
+
+.aboutBody {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 40px;
+}
+
+.aboutBody p {
+  max-width: 52ch;
+}
+
+.aboutBody .ctaRow {
+  grid-column: 1 / -1;
+  margin-top: 12px;
+}
+
+.figures {
+  background: var(--bg);
+  color: var(--fg);
+  padding-block: clamp(80px, 10vw, 150px);
+}
+
+.figureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px var(--gutter);
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.figureValue {
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 7.4vw, 8rem);
+  font-weight: 700;
+  font-variation-settings: "wdth" 80;
+  letter-spacing: -0.045em;
+}
+
+.figureLabel {
+  max-width: 30ch;
+}
+
+/* Columns and runs of letters share one 1em line box, aligned at the foot. */
+.rollingFigure {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.figureColumn {
+  display: block;
+  height: 1em;
+  overflow: clip;
+}
+
+.figureStrip {
+  display: flex;
+  flex-direction: column;
+}
+
+.figureStrip::before {
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";
+  display: block;
+  white-space: pre;
+  line-height: 1;
+  text-align: center;
+}
+
+.figureChar {
+  white-space: pre-wrap;
+}
+
+@media (max-width: 900px) {
+  .aboutTitle,
+  .aboutCopy {
+    grid-column: 1 / -1;
+  }
+
+  .aboutBody,
+  .figureGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Work: the sideways row ---------- */
+
+.work {
+  padding-block: var(--section-gap);
+}
+
+.work.isPinned {
+  padding-block: 0;
+}
+
+.workStage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(40px, 5vw, 72px);
+}
+
+.work.isPinned .workStage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+  padding-top: var(--nav-h);
+}
+
+.workHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px 40px;
+}
+
+.workViewport {
+  width: min(var(--maxw), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+.workTrack {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 48px clamp(16px, 2vw, 32px);
+}
+
+.work.isPinned .workViewport {
+  overflow: clip;
+}
+
+.work.isPinned .workTrack {
+  display: flex;
+  width: max-content;
+}
+
+.work.isPinned .workCard {
+  width: clamp(300px, 33vw, 520px);
+}
+
+.workCard a {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.workMedia {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: clip;
+  background: var(--bg-2);
+}
+
+.workMedia img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease-expo);
+}
+
+.workMedia img.contain {
+  object-fit: contain;
+  background: var(--c-paper);
+}
+
+.workCard a:hover img {
+  transform: scale(1.06);
+}
+
+.workTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.workTags {
+  font-size: var(--step-small);
+  color: var(--fg-soft);
+}
+
+@media (max-width: 900px) {
+  .workHead {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .workTrack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 12px;
+  }
+
+  .workTitle {
+    font-size: 1.125rem;
+  }
+
+  .workTags {
+    font-size: 0.875rem;
+  }
+}
+
+/* ---------- Focus ---------- */
+
+.focus {
+  padding-block: var(--section-gap);
+}
+
+.focusGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px var(--gutter);
+}
+
+.focusGrid .sideLabel {
+  grid-column: 1 / 4;
+  padding-top: 0.6em;
+}
+
+.focusGrid > div {
+  grid-column: 4 / 13;
+}
+
+.focusText {
+  margin-top: 36px;
+  font-size: var(--step-lead);
+  max-width: 48ch;
+}
+
+.focusRoles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 56px;
+}
+
+.focusRoles li {
+  padding: 0.35em 0.8em;
+  border-radius: 999px;
+  background: var(--bg-2);
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.6vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  transition: background-color var(--t-hover) ease, color var(--t-hover) ease;
+}
+
+.focusRoles li:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+@media (max-width: 900px) {
+  .focusGrid .sideLabel,
+  .focusGrid > div {
+    grid-column: 1 / -1;
+  }
+
+  .focusGrid .sideLabel {
+    order: 2;
+    padding-top: 0;
+  }
+}
+
+/* ---------- Stack marquees ---------- */
+
+.stack {
+  padding-block: var(--section-gap);
+  overflow: clip;
+}
+
+.stack .sectionTitle {
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.marquee {
+  width: min(var(--maxw), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+  overflow: clip;
+  padding-block: 0.06em;
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+}
+
+.marqueeList {
+  display: flex;
+}
+
+.marqueeList li {
+  display: flex;
+  align-items: center;
+  padding-right: 0.45em;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8.4vw, 8.6rem);
+  font-weight: 700;
+  font-variation-settings: "wdth" 84;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.marqueeList li::after {
+  content: "";
+  width: 0.22em;
+  height: 0.22em;
+  margin-left: 0.45em;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.marqueeSoft li {
+  color: var(--accent);
+}
+
+.marqueeSoft li::after {
+  background: var(--fg);
+}

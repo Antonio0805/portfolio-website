@@ -1,0 +1,71 @@
+:root {
+  /* Chapter colours: each section is one flat field, cut hard against the next. */
+  --c-ink: #0b0c0b;
+  --c-ink-2: #1a1c1a;
+  --c-paper: #e9e8e3;
+  --c-paper-2: #dad9d2;
+  --c-teal: #095850;
+  --c-teal-2: #0b4a43;
+  --c-cream: #f1f1ed;
+  --c-signal: #c8f560;
+  --c-signal-2: #b6e44c;
+
+  --font-display: "Bricolage Grotesque", "Manrope", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  --step-display: clamp(3.3rem, 12.6vw, 13.5rem);
+  --step-title: clamp(2.4rem, 6vw, 6.4rem);
+  --step-heading: clamp(1.8rem, 3.4vw, 3.2rem);
+  --step-lead: clamp(1.15rem, 1.5vw, 1.4rem);
+  --step-body: 1.0625rem;
+  --step-small: 0.9375rem;
+
+  --gutter: clamp(16px, 3.4vw, 48px);
+  --maxw: 1520px;
+  --nav-h: 76px;
+  --section-gap: clamp(72px, 8.5vw, 128px);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+  --t-move: 420ms;
+}
+
+[data-chapter="ink"] {
+  --bg: var(--c-ink);
+  --bg-2: var(--c-ink-2);
+  --fg: var(--c-paper);
+  --fg-soft: rgb(233 232 227 / 0.72);
+  --accent: var(--c-signal);
+  --on-accent: var(--c-ink);
+}
+
+[data-chapter="paper"] {
+  --bg: var(--c-paper);
+  --bg-2: var(--c-paper-2);
+  --fg: var(--c-ink);
+  --fg-soft: rgb(11 12 11 / 0.7);
+  --accent: var(--c-teal);
+  --on-accent: var(--c-cream);
+}
+
+[data-chapter="teal"] {
+  --bg: var(--c-teal);
+  --bg-2: var(--c-teal-2);
+  --fg: var(--c-cream);
+  --fg-soft: rgb(241 241 237 / 0.8);
+  --accent: var(--c-signal);
+  --on-accent: var(--c-ink);
+}
+
+[data-chapter="signal"] {
+  --bg: var(--c-signal);
+  --bg-2: var(--c-signal-2);
+  --fg: var(--c-ink);
+  --fg-soft: rgb(11 12 11 / 0.74);
+  --accent: var(--c-ink);
+  --on-accent: var(--c-signal);
+}
