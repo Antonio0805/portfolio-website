@@ -6,18 +6,20 @@
 
 html {
   background: var(--c-ink);
-  color-scheme: dark;
   -webkit-text-size-adjust: 100%;
+  scrollbar-color: #52655f var(--c-paper);
+  scroll-padding-top: calc(var(--nav-h) + 24px);
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  background: var(--c-ink);
-  color: var(--c-paper);
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+  background: var(--c-paper);
+  color: var(--c-ink);
   font-family: var(--font-body);
   font-size: var(--step-body);
-  line-height: 1.55;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -26,78 +28,76 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  text-underline-offset: 0.2em;
 }
-
 img {
   display: block;
   max-width: 100%;
 }
-
+svg {
+  flex-shrink: 0;
+}
 h1,
 h2,
 h3,
 p,
 ul,
 ol,
+dl,
+dd,
 figure {
   margin: 0;
 }
-
 ul,
 ol {
   padding: 0;
   list-style: none;
 }
-
 button {
   font: inherit;
   color: inherit;
 }
-
+button,
+a {
+  -webkit-tap-highlight-color: rgb(134 205 189 / 0.18);
+  touch-action: manipulation;
+}
+[hidden] {
+  display: none !important;
+}
 ::selection {
   background: var(--c-teal-light);
   color: var(--c-ink);
 }
-
 :focus-visible {
-  outline: 2px solid var(--accent, var(--c-teal-light));
+  outline: 2px solid var(--accent, var(--c-teal));
   outline-offset: 4px;
+}
+main:focus {
+  outline: none;
+}
+:where(h1, h2, h3) {
+  overflow-wrap: anywhere;
 }
 
 .page {
   min-height: 100svh;
 }
-
 .wrap {
   width: min(var(--maxw), 100% - 2 * var(--gutter));
   margin-inline: auto;
 }
-
 .chapter {
-  position: relative;
   background: var(--bg);
   color: var(--fg);
 }
-
 .siteMain {
-  position: relative;
-  z-index: 1;
+  min-width: 0;
 }
-
-/* A chapter that settles in as a sheet over the colour of the one before. */
-.sheetUnder {
-  background: var(--bg);
-}
-
-.sheet {
-  overflow: clip;
-  transform-origin: 50% 0;
-}
-
 .srOnly {
   position: absolute;
   width: 1px;
-  height: 1px; /* taste-skill-ignore */
+  height: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;
@@ -105,201 +105,156 @@ button {
   white-space: nowrap;
   border: 0;
 }
-
-/* Masks for rising words and characters. The padding pair keeps accents and
-   descenders (Ș, ă, g, p) inside the mask. */
-.wordMask,
-.kineticWord {
-  display: inline-block;
-  overflow: clip;
-  vertical-align: top;
-  padding: 0.12em 0 0.14em;
-  margin: -0.12em 0 -0.14em;
+.skipLink {
+  position: fixed;
+  top: 10px;
+  left: var(--gutter);
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--c-paper);
+  color: var(--c-ink);
+  border-radius: 6px;
+  transform: translateY(-150%);
 }
-
-.word,
-.kineticChar {
-  display: inline-block;
-  will-change: transform;
+.skipLink:focus {
+  transform: none;
 }
-
-.kinetic {
-  display: block;
-}
-
-/* Shared type roles */
 .sectionTitle {
   font-family: var(--font-display);
   font-size: var(--step-title);
-  font-weight: 700;
-  font-variation-settings: "wdth" 88;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
-
-.sectionLead,
-.pageLead {
-  font-size: var(--step-lead);
-  line-height: 1.45;
-  max-width: 46ch;
-}
-
-.sideLabel {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--fg-soft);
-}
-
 .statusTag {
   display: inline-flex;
+  width: fit-content;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--on-accent);
-  font-size: var(--step-small);
-  font-weight: 700;
-}
-
-.statusTag.isDone {
+  padding: 4px 10px;
+  border-radius: 4px;
   background: var(--bg-2);
-  color: var(--fg);
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.5;
 }
-
-.liveDot {
-  position: relative;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--c-coral);
-  flex: none;
+.statusTag.isDone {
+  color: var(--fg-soft);
 }
-
-.statusTag .liveDot {
-  background: currentColor;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .liveDot::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: inherit;
-    animation: livePulse 2.2s var(--ease-out) infinite;
-  }
-}
-
-@keyframes livePulse {
-  from {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-  to {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-
-/* Buttons: flat, fully round, one fill. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 52px;
-  padding: 0 24px;
-  border: 0;
-  border-radius: 999px;
+  min-height: 48px;
+  max-width: 100%;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  border-radius: 6px;
   background: var(--bg-2);
   color: var(--fg);
-  font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 700;
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 1.4;
+  text-align: center;
   cursor: pointer;
   transition:
     background-color var(--t-hover) ease,
-    color var(--t-hover) ease,
-    transform var(--t-press) var(--ease-out);
+    color var(--t-hover) ease;
 }
-
 .btn.primary {
   background: var(--accent);
   color: var(--on-accent);
 }
-
-.btn.ghost:hover {
-  background: var(--fg);
-  color: var(--bg);
+.btn.ghost {
+  border-color: var(--line);
+  background: transparent;
 }
-
-.btn:active {
-  transform: scale(0.96);
-}
-
 .btn.small {
   min-height: 44px;
-  padding: 0 18px;
+  padding: 9px 14px;
   font-size: var(--step-small);
 }
-
-.btnArrow {
-  transition: transform var(--t-move) var(--ease-out);
+.btn svg {
+  width: 18px;
+  height: 18px;
 }
-
-.btn:hover .btnArrow {
-  transform: translateX(4px);
-}
-
 .ctaRow {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
 }
-
-.magnetic {
-  display: inline-block;
+.cvTag {
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgb(16 24 32 / 0.1);
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+}
+.footer .cvTag {
+  background: var(--bg-2);
+}
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  min-height: 44px;
+  color: var(--accent);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+.textLink svg {
+  width: 18px;
+  height: 18px;
+}
+.toolList,
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+.toolList li {
+  padding: 6px 11px;
+  background: var(--bg-2);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.tagList {
+  gap: 6px 14px;
+  color: var(--fg-soft);
+  font-size: var(--step-small);
 }
 
-/* Label roll: the text slides up and its copy rises into place. */
-.roll {
-  display: inline-grid;
-  overflow: clip;
-  line-height: 1.3;
-  vertical-align: middle;
+@media (hover: hover) {
+  .btn.primary:hover {
+    background: color-mix(in srgb, var(--accent) 88%, var(--fg));
+  }
+  .btn.ghost:hover {
+    background: var(--bg-2);
+  }
+  .textLink:hover {
+    text-decoration: underline;
+  }
 }
 
-.rollText {
-  grid-area: 1 / 1;
+@media (max-width: 420px) {
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .roll[data-text]::after {
-    content: attr(data-text);
-    grid-area: 1 / 1;
-    transform: translateY(105%);
-  }
-
-  .roll[data-text] .rollText,
-  .roll[data-text]::after {
-    transition: transform 520ms var(--ease-in-out);
-  }
-
-  a:hover .roll[data-text] .rollText,
-  a:focus-visible .roll[data-text] .rollText,
-  button:hover .roll[data-text] .rollText,
-  button:focus-visible .roll[data-text] .rollText {
-    transform: translateY(-105%);
-  }
-
-  a:hover .roll[data-text]::after,
-  a:focus-visible .roll[data-text]::after,
-  button:hover .roll[data-text]::after,
-  button:focus-visible .roll[data-text]::after {
-    transform: none;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

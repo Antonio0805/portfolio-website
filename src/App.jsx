@@ -3,14 +3,13 @@ import "./styles/base.css";
 import "./styles/chrome.css";
 import "./styles/home.css";
 import "./styles/pages.css";
+import "./styles/motion.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { AnimatePresence, MotionConfig } from "motion/react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Navbar from "./components/ Navbar";
 import Footer from "./components/Footer";
-import { PageTransition } from "./components/Motion";
-import { scrollToTop, useSmoothScroll } from "./lib/smoothScroll";
 import { content } from "./content";
+import { useScrollReveal } from "./lib/useScrollReveal";
 
 import Home from "./pages/Home";
 import ExperiencePage from "./pages/ExperiencePage";
@@ -21,39 +20,98 @@ import ContactPage from "./pages/ContactPage";
 
 export default function App() {
   const location = useLocation();
+  useScrollReveal(location.pathname);
   const [language, setLanguage] = useState(() => {
-    const savedLanguage = localStorage.getItem("cv-language");
-    return savedLanguage === "ro" || savedLanguage === "en" ? savedLanguage : "en";
+    try {
+      return localStorage.getItem("cv-language") === "ro" ? "ro" : "en";
+    } catch {
+      return "en";
+    }
   });
 
-  useSmoothScroll();
-
   useEffect(() => {
-    localStorage.setItem("cv-language", language);
+    try {
+      localStorage.setItem("cv-language", language);
+    } catch {
+      // Language switching also works when browser storage is unavailable.
+    }
     document.documentElement.lang = language;
   }, [language]);
 
   const texts = content[language];
 
-  return (
-    <MotionConfig reducedMotion="user">
-      <div className="page">
-        <Navbar language={language} setLanguage={setLanguage} navText={texts.nav} />
+  useLayoutEffect(() => {
+    const target =
+      location.hash && document.getElementById(location.hash.slice(1));
+    if (target) {
+      target.scrollIntoView({ behavior: "instant" });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+    // Wait until the route and the mobile menu have both committed.
+    const frame = requestAnimationFrame(() => {
+      document.querySelector("main")?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [location.pathname, location.hash]);
 
-        <AnimatePresence mode="wait" onExitComplete={scrollToTop}>
-          <PageTransition key={location.pathname}>
-            <Routes location={location}>
-              <Route path="/" element={<Home text={texts.home} nav={texts.nav} projects={texts.projects} />} />
-              <Route path="/experience" element={<ExperiencePage text={texts.experience} />} />
-              <Route path="/projects" element={<ProjectsPage text={texts.projects} />} />
-              <Route path="/skills" element={<SkillsPage text={texts.skills} />} />
-              <Route path="/education" element={<EducationPage text={texts.education} />} />
-              <Route path="/contact" element={<ContactPage text={texts.contact} />} />
-            </Routes>
-            <Footer nav={texts.nav} cta={texts.home.ctaContact} showCta={location.pathname !== "/contact"} />
-          </PageTransition>
-        </AnimatePresence>
-      </div>
-    </MotionConfig>
+  useEffect(() => {
+    const pageName =
+      {
+        "/": texts.nav.about,
+        "/experience": texts.nav.experience,
+        "/projects": texts.nav.projects,
+        "/skills": texts.nav.skills,
+        "/education": texts.nav.education,
+        "/contact": texts.nav.contact,
+      }[location.pathname] || texts.nav.about;
+    document.title = `${pageName} · Antonio Smărăndescu`;
+  }, [location.pathname, texts]);
+
+  return (
+    <div className="page" data-chapter="ink">
+      <a className="skipLink" href="#main-content">
+        {texts.nav.skipToContent}
+      </a>
+      <Navbar
+        language={language}
+        setLanguage={setLanguage}
+        navText={texts.nav}
+      />
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home text={texts.home} nav={texts.nav} projects={texts.projects} />
+          }
+        />
+        <Route
+          path="/experience"
+          element={<ExperiencePage text={texts.experience} />}
+        />
+        <Route
+          path="/projects"
+          element={<ProjectsPage text={texts.projects} />}
+        />
+        <Route path="/skills" element={<SkillsPage text={texts.skills} />} />
+        <Route
+          path="/education"
+          element={<EducationPage text={texts.education} />}
+        />
+        <Route path="/contact" element={<ContactPage text={texts.contact} />} />
+        <Route
+          path="*"
+          element={
+            <Home text={texts.home} nav={texts.nav} projects={texts.projects} />
+          }
+        />
+      </Routes>
+      <Footer
+        nav={texts.nav}
+        cta={texts.home.ctaContact}
+        showCta={location.pathname !== "/contact"}
+      />
+    </div>
   );
 }

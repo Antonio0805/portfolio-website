@@ -1,0 +1,190 @@
+/* Introduce the person first; keep the rest of the CV immediately readable. */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --ease-arrive: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .profileName {
+    animation: signature-arrive 600ms var(--ease-arrive) backwards;
+  }
+
+  .profileRole {
+    animation: ink-arrive 460ms var(--ease-arrive) 70ms backwards;
+  }
+
+  .profileFocus {
+    animation: focus-arrive 560ms var(--ease-arrive) 120ms backwards;
+  }
+
+  .pageTitle {
+    animation: ink-arrive 320ms var(--ease-arrive) backwards;
+  }
+
+  .btn {
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      transform 180ms var(--ease-arrive),
+      box-shadow 180ms ease;
+  }
+
+  .btn:active,
+  .contactCopy:active {
+    transform: scale(0.98);
+  }
+
+  .textLink svg,
+  .workTitleRow svg,
+  .footerCta svg {
+    transition: transform 240ms var(--ease-arrive);
+  }
+
+  .workMedia {
+    transition: border-color 200ms ease;
+  }
+
+  .workMedia img {
+    transition: transform 420ms var(--ease-arrive);
+  }
+
+  .workCard:focus-visible .workMedia {
+    border-color: var(--accent);
+  }
+
+  .navLink {
+    position: relative;
+    transition: color 150ms ease;
+  }
+
+  .navLink.active {
+    text-decoration: none;
+  }
+
+  .navLink::after {
+    content: "";
+    position: absolute;
+    inset: auto 10px 6px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms var(--ease-arrive);
+  }
+
+  .navLink.active::after {
+    transform: scaleX(1);
+  }
+
+  .langBtn,
+  .menu nav a,
+  .contactCopy {
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      transform 150ms var(--ease-arrive);
+  }
+
+  .burgerLines span {
+    transition: transform 200ms var(--ease-arrive);
+  }
+
+  .menu:not([hidden]) {
+    animation: menu-arrive 200ms var(--ease-arrive);
+  }
+
+  .contactCopy[data-copied="true"] path {
+    stroke-dasharray: 24;
+    animation: confirm-copy 260ms var(--ease-arrive);
+  }
+
+  .contactFeedback:not(:empty) {
+    animation: ink-arrive 180ms var(--ease-arrive);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgb(16 24 32 / 0.1);
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .textLink:hover svg {
+      transform: translateX(3px);
+    }
+
+    .workCard:hover .workMedia {
+      border-color: var(--accent);
+    }
+
+    .workCard:hover .workMedia img {
+      transform: scale(1.025);
+    }
+
+    .workCard:hover .workTitleRow svg,
+    .footerCta:hover svg {
+      transform: translate(2px, -2px);
+    }
+
+    .navLink:hover::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@keyframes signature-arrive {
+  from {
+    opacity: 0.7;
+    transform: translateY(10px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes ink-arrive {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes focus-arrive {
+  from {
+    opacity: 0.8;
+    transform: translateY(10px);
+    border-color: var(--accent);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    border-color: var(--line);
+  }
+}
+
+@keyframes menu-arrive {
+  from {
+    opacity: 0.85;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes confirm-copy {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

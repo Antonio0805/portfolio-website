@@ -12,9 +12,15 @@ export const content = {
       navigationHint: "Move through the portfolio quickly",
       langRo: "RO",
       langEn: "EN",
+      skipToContent: "Skip to content",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
+      language: "Language",
+      email: "Email",
     },
     home: {
       badge: "SAP Analytics • Data • Automation",
+      selectedProjects: "Selected projects",
       title: "SAP Analytics at Deloitte,",
       titleAccent: "building with data, software and AI",
       paragraphs: [
@@ -26,38 +32,86 @@ export const content = {
       ctaContact: "Let's Connect",
       ctaExperience: "View Experience",
       points: [
-        { value: "10+", label: "Projects delivered across software, automation, AI, and embedded systems" },
-        { value: "4 roles", label: "From Power BI reporting and AI automation to SAP analytics at Deloitte" },
-        { value: "2026-2028", label: "Master's in e-Government (e-GOV) at Politehnica University of Bucharest" },
+        {
+          value: "10+",
+          label:
+            "Projects delivered across software, automation, AI, and embedded systems",
+        },
+        {
+          value: "4 roles",
+          label:
+            "From Power BI reporting and AI automation to SAP analytics at Deloitte",
+        },
+        {
+          value: "2026-2028",
+          label:
+            "Master's in e-Government (e-GOV) at Politehnica University of Bucharest",
+        },
       ],
       focusEyebrow: "Current focus",
       focusTitle: "SAP analytics, data and automation",
       focusText:
         "Data modelling and reporting across the SAP analytics stack, backed by Python, SQL and web development for internal tools and automation.",
       summary: [
-        { title: "SAP Analytics", text: "Datasphere, SAP Analytics Cloud and BW/4HANA for enterprise reporting." },
-        { title: "Reporting", text: "Power BI and Excel dashboards that support business decisions." },
-        { title: "Development", text: "Python, SQL, React and Node.js for web apps and internal tools." },
-        { title: "AI & Automation", text: "AI agents and OpenAI API workflows that automate everyday work." },
+        {
+          title: "SAP Analytics",
+          text: "Datasphere, SAP Analytics Cloud and BW/4HANA for enterprise reporting.",
+        },
+        {
+          title: "Reporting",
+          text: "Power BI and Excel dashboards that support business decisions.",
+        },
+        {
+          title: "Development",
+          text: "Python, SQL, React and Node.js for web apps and internal tools.",
+        },
+        {
+          title: "AI & Automation",
+          text: "AI agents and OpenAI API workflows that automate everyday work.",
+        },
       ],
       cinema: {
         kicker: "Currently · SAP Analytics at Deloitte",
         rolePrefix: "Working across",
-        roles: ["SAP Analytics", "Data Engineering", "Automation", "AI Workflows"],
+        roles: [
+          "SAP Analytics",
+          "Data Engineering",
+          "Automation",
+          "AI Workflows",
+        ],
         scrollCue: "Scroll",
         hud: ["SAP Datasphere", "SAC", "BW/4HANA", "Python"],
       },
       stackLabel: "Working with",
-      stack: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud", "SAP BW/4HANA", "Power BI", "Python", "SQL", "React", "Node.js", "Java", "Spring Boot", "OpenAI API", "AI Agents"],
+      stack: [
+        "SAP Business Data Cloud",
+        "SAP Datasphere",
+        "SAP Analytics Cloud",
+        "SAP BW/4HANA",
+        "Power BI",
+        "Python",
+        "SQL",
+        "React",
+        "Node.js",
+        "Java",
+        "Spring Boot",
+        "OpenAI API",
+        "AI Agents",
+      ],
     },
     projects: {
       eyebrow: "Projects",
       title: "Projects",
       lead: "A selection of projects showcasing full-stack development, data work, and embedded systems.",
       featured: "Featured",
-      metrics: ["Full-stack workflow", "Database integration", "Real operational use case"],
+      metrics: [
+        "Full-stack workflow",
+        "Database integration",
+        "Real operational use case",
+      ],
       github: "GitHub",
       liveDemo: "Live Demo",
+      watchDemo: "Watch demo",
       live: "Live",
       demoSoon: "Live demo coming soon",
       projects: [
@@ -69,7 +123,11 @@ export const content = {
           previewImage: "/Harta.png",
           demo: "https://youtu.be/Y8BnmQJLo0c",
           featured: true,
-          metrics: ["510 stations mapped", "Weighted recommendation score", "Route planning"],
+          metrics: [
+            "510 stations mapped",
+            "Weighted recommendation score",
+            "Route planning",
+          ],
         },
         {
           title: "Tribunal Case Management",
@@ -102,7 +160,8 @@ export const content = {
           description:
             "Arduino + DHT11 project measuring temperature/humidity and displaying results on a 16x2 LCD screen.",
           tags: ["Arduino", "Sensors", "Embedded"],
-          github: "https://github.com/Antonio0805/Arduino_Temperature_and_Humidity",
+          github:
+            "https://github.com/Antonio0805/Arduino_Temperature_and_Humidity",
           previewImage: "/arduino.jpeg",
           previewFit: "contain",
           demo: "",
@@ -114,7 +173,12 @@ export const content = {
           tags: ["Python", "Flask", "OpenAI API"],
           github: "https://github.com/Antonio0805/create-your-own-song",
           showcase: true,
-          showcaseImages: ["/generare_1.jpeg", "/generare_2.jpeg", "/generare_3.jpeg", "/generare_4.jpeg"],
+          showcaseImages: [
+            "/generare_1.jpeg",
+            "/generare_2.jpeg",
+            "/generare_3.jpeg",
+            "/generare_4.jpeg",
+          ],
           demo: "",
         },
         {
@@ -131,7 +195,8 @@ export const content = {
           description:
             "Embedded surveillance system designed to detect and track a person's movement using an ESP32-CAM module for image capture and an Arduino Uno for controlling the servomotors that move the camera.",
           tags: ["ESP32-CAM", "Arduino Uno", "Servo Motors"],
-          github: "https://github.com/Antonio0805/Intelligent-Surveillance-System-Based-on-Motion-Sensor",
+          github:
+            "https://github.com/Antonio0805/Intelligent-Surveillance-System-Based-on-Motion-Sensor",
           demo: "https://youtube.com/shorts/D4NzKLzIOqg",
         },
       ],
@@ -151,16 +216,6 @@ export const content = {
           ],
         },
         {
-          role: "AI Automation Trainee",
-          company: "Ventivo Grup",
-          time: "Sep 2025",
-          bullets: [
-            "Developed and tested AI agents.",
-            "Integrated AI tools into prototype applications.",
-            "Experimented with AI automation platforms.",
-          ],
-        },
-        {
           role: "Training & Team Building Intern",
           company: "Ascendis",
           time: "Dec 2025 – Mar 2026",
@@ -168,6 +223,16 @@ export const content = {
             "Assisted with team-building and training sessions.",
             "Helped with corporate event preparation.",
             "Participated in the organization of several company events.",
+          ],
+        },
+        {
+          role: "AI Automation Trainee",
+          company: "Ventivo Grup",
+          time: "Sep 2025",
+          bullets: [
+            "Developed and tested AI agents.",
+            "Integrated AI tools into prototype applications.",
+            "Experimented with AI automation platforms.",
           ],
         },
         {
@@ -185,13 +250,13 @@ export const content = {
     education: {
       eyebrow: "Education",
       title: "Academic background",
-      lead:
-        "Technical systems training supported by a strong mathematics and computer science foundation.",
+      lead: "Technical systems training supported by a strong mathematics and computer science foundation.",
       label: "Education",
       items: [
         {
           school: "Politehnica University of Bucharest",
-          program: "Faculty of Automatic Control and Computer Science • Master's Programme in e-Government (e-GOV)",
+          program:
+            "Faculty of Automatic Control and Computer Science • Master's Programme in e-Government (e-GOV)",
           time: "2026 – 2028",
           detail: "Master's degree",
           status: "In progress",
@@ -199,7 +264,8 @@ export const content = {
         },
         {
           school: "Politehnica University of Bucharest",
-          program: "Faculty of Automatic Control and Computer Science • B.Sc. in Systems Engineering",
+          program:
+            "Faculty of Automatic Control and Computer Science • B.Sc. in Systems Engineering",
           time: "2022 – 2026",
           detail: "Bachelor's degree",
           status: "Completed",
@@ -208,23 +274,44 @@ export const content = {
     },
     skills: {
       eyebrow: "Skills",
-      title: "Technical Skills and Professional Strengths",
-      lead:
-        "A structured overview of the technologies, engineering fundamentals, and collaboration skills I use to build reliable software and contribute effectively in team environments.",
+      title: "Technical skills",
+      lead: "A structured overview of the technologies, engineering fundamentals, and collaboration skills I use to build reliable software and contribute effectively in team environments.",
       core: "Core capabilities",
       languagesTitle: "Languages",
       groups: [
         {
           title: "SAP & Analytics",
-          items: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud (SAC)", "SAP BW/4HANA", "Power BI", "Excel"],
+          items: [
+            "SAP Business Data Cloud",
+            "SAP Datasphere",
+            "SAP Analytics Cloud (SAC)",
+            "SAP BW/4HANA",
+            "Power BI",
+            "Excel",
+          ],
         },
         {
           title: "Development",
-          items: ["Python", "SQL", "Java", "C++", "JavaScript", "React", "Node.js", "Spring Boot"],
+          items: [
+            "Python",
+            "SQL",
+            "Java",
+            "C++",
+            "JavaScript",
+            "React",
+            "Node.js",
+            "Spring Boot",
+          ],
         },
         {
           title: "AI & Tools",
-          items: ["AI Agents & Automation", "OpenAI API", "Machine Learning", "Git", "GitHub"],
+          items: [
+            "AI Agents & Automation",
+            "OpenAI API",
+            "Machine Learning",
+            "Git",
+            "GitHub",
+          ],
         },
       ],
       languages: [
@@ -236,8 +323,10 @@ export const content = {
     contact: {
       eyebrow: "Contact",
       title: "Let's talk",
-      lead:
-        "The fastest way to reach me is by email or LinkedIn. GitHub is the best place to review code and project history.",
+      lead: "The fastest way to reach me is by email or LinkedIn. GitHub is the best place to review code and project history.",
+      copyEmail: "Copy email address",
+      copied: "Email copied",
+      copyError: "Select the email address to copy it.",
       phone: "Phone",
       email: "Email",
       github: "GitHub",
@@ -250,20 +339,26 @@ export const content = {
   },
   ro: {
     nav: {
-      about: "Despre Mine",
-      experience: "Experienta",
+      about: "Despre mine",
+      experience: "Experiență",
       projects: "Proiecte",
-      skills: "Skill-uri",
-      education: "Educatie",
+      skills: "Competențe",
+      education: "Educație",
       contact: "Contact",
-      downloadCv: "Descarca CV",
+      downloadCv: "Descarcă CV",
       navigation: "Navigare",
       navigationHint: "Mergi rapid prin portofoliu",
       langRo: "RO",
       langEn: "EN",
+      skipToContent: "Sari la conținut",
+      openMenu: "Deschide meniul",
+      closeMenu: "Închide meniul",
+      language: "Limba",
+      email: "Email",
     },
     home: {
       badge: "SAP Analytics • Date • Automatizare",
+      selectedProjects: "Proiecte selectate",
       title: "SAP Analytics la Deloitte,",
       titleAccent: "construind cu date, software si AI",
       paragraphs: [
@@ -275,38 +370,85 @@ export const content = {
       ctaContact: "Hai sa vorbim",
       ctaExperience: "Vezi Experienta",
       points: [
-        { value: "10+", label: "Proiecte realizate in software, automatizare, AI si embedded" },
-        { value: "4 roluri", label: "De la raportare Power BI si automatizare AI la SAP analytics la Deloitte" },
-        { value: "2026-2028", label: "Master in e-Guvernare (e-GOV) la Universitatea Politehnica din Bucuresti" },
+        {
+          value: "10+",
+          label: "Proiecte realizate in software, automatizare, AI si embedded",
+        },
+        {
+          value: "4 roluri",
+          label:
+            "De la raportare Power BI si automatizare AI la SAP analytics la Deloitte",
+        },
+        {
+          value: "2026-2028",
+          label:
+            "Master in e-Guvernare (e-GOV) la Universitatea Politehnica din Bucuresti",
+        },
       ],
       focusEyebrow: "Focus actual",
       focusTitle: "SAP analytics, date si automatizare",
       focusText:
         "Modelare de date si raportare in ecosistemul SAP analytics, sustinute de Python, SQL si dezvoltare web pentru instrumente interne si automatizare.",
       summary: [
-        { title: "SAP Analytics", text: "Datasphere, SAP Analytics Cloud si BW/4HANA pentru raportare enterprise." },
-        { title: "Raportare", text: "Dashboard-uri Power BI si Excel care sustin deciziile de business." },
-        { title: "Dezvoltare", text: "Python, SQL, React si Node.js pentru aplicatii web si instrumente interne." },
-        { title: "AI & Automatizare", text: "Agenti AI si fluxuri cu OpenAI API care automatizeaza munca de zi cu zi." },
+        {
+          title: "SAP Analytics",
+          text: "Datasphere, SAP Analytics Cloud si BW/4HANA pentru raportare enterprise.",
+        },
+        {
+          title: "Raportare",
+          text: "Dashboard-uri Power BI si Excel care sustin deciziile de business.",
+        },
+        {
+          title: "Dezvoltare",
+          text: "Python, SQL, React si Node.js pentru aplicatii web si instrumente interne.",
+        },
+        {
+          title: "AI & Automatizare",
+          text: "Agenti AI si fluxuri cu OpenAI API care automatizeaza munca de zi cu zi.",
+        },
       ],
       cinema: {
         kicker: "In prezent · SAP Analytics la Deloitte",
         rolePrefix: "Lucrez in",
-        roles: ["SAP Analytics", "Data Engineering", "Automatizare", "Workflow-uri AI"],
+        roles: [
+          "SAP Analytics",
+          "Data Engineering",
+          "Automatizare",
+          "Workflow-uri AI",
+        ],
         scrollCue: "Deruleaza",
         hud: ["SAP Datasphere", "SAC", "BW/4HANA", "Python"],
       },
       stackLabel: "Lucrez cu",
-      stack: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud", "SAP BW/4HANA", "Power BI", "Python", "SQL", "React", "Node.js", "Java", "Spring Boot", "OpenAI API", "AI Agents"],
+      stack: [
+        "SAP Business Data Cloud",
+        "SAP Datasphere",
+        "SAP Analytics Cloud",
+        "SAP BW/4HANA",
+        "Power BI",
+        "Python",
+        "SQL",
+        "React",
+        "Node.js",
+        "Java",
+        "Spring Boot",
+        "OpenAI API",
+        "AI Agents",
+      ],
     },
     projects: {
       eyebrow: "Proiecte",
       title: "Proiecte",
       lead: "O selectie de proiecte care acopera dezvoltare full-stack, analiza de date si sisteme embedded.",
       featured: "Recomandat",
-      metrics: ["Flux full-stack", "Integrare cu baza de date", "Caz de utilizare real"],
+      metrics: [
+        "Flux full-stack",
+        "Integrare cu baza de date",
+        "Caz de utilizare real",
+      ],
       github: "GitHub",
       liveDemo: "Demo Live",
+      watchDemo: "Vezi demo",
       live: "Live",
       demoSoon: "Demo live in curand",
       projects: [
@@ -318,7 +460,11 @@ export const content = {
           previewImage: "/Harta.png",
           demo: "https://youtu.be/Y8BnmQJLo0c",
           featured: true,
-          metrics: ["510 statii mapate", "Scor multi-criterial", "Planificare traseu"],
+          metrics: [
+            "510 statii mapate",
+            "Scor multi-criterial",
+            "Planificare traseu",
+          ],
         },
         {
           title: "Tribunal Case Management",
@@ -351,7 +497,8 @@ export const content = {
           description:
             "Proiect Arduino + DHT11 pentru masurarea temperaturii si umiditatii, cu afisare pe ecran LCD 16x2.",
           tags: ["Arduino", "Sensors", "Embedded"],
-          github: "https://github.com/Antonio0805/Arduino_Temperature_and_Humidity",
+          github:
+            "https://github.com/Antonio0805/Arduino_Temperature_and_Humidity",
           previewImage: "/arduino.jpeg",
           previewFit: "contain",
           demo: "",
@@ -363,7 +510,12 @@ export const content = {
           tags: ["Python", "Flask", "OpenAI API"],
           github: "https://github.com/Antonio0805/create-your-own-song",
           showcase: true,
-          showcaseImages: ["/generare_1.jpeg", "/generare_2.jpeg", "/generare_3.jpeg", "/generare_4.jpeg"],
+          showcaseImages: [
+            "/generare_1.jpeg",
+            "/generare_2.jpeg",
+            "/generare_3.jpeg",
+            "/generare_4.jpeg",
+          ],
           demo: "",
         },
         {
@@ -380,7 +532,8 @@ export const content = {
           description:
             "Sistem embedded de supraveghere conceput pentru a detecta si urmari miscarea unei persoane folosind un modul ESP32-CAM pentru captarea imaginilor si un Arduino Uno pentru controlul servomotoarelor care misca camera.",
           tags: ["ESP32-CAM", "Arduino Uno", "Servo Motors"],
-          github: "https://github.com/Antonio0805/Intelligent-Surveillance-System-Based-on-Motion-Sensor",
+          github:
+            "https://github.com/Antonio0805/Intelligent-Surveillance-System-Based-on-Motion-Sensor",
           demo: "https://youtube.com/shorts/D4NzKLzIOqg",
         },
       ],
@@ -400,16 +553,6 @@ export const content = {
           ],
         },
         {
-          role: "AI Automation Trainee",
-          company: "Ventivo Grup",
-          time: "Sep 2025",
-          bullets: [
-            "Am dezvoltat si testat agenti AI.",
-            "Am integrat tool-uri AI in aplicatii prototip.",
-            "Am experimentat cu platforme de automatizare AI.",
-          ],
-        },
-        {
           role: "Training & Team Building Intern",
           company: "Ascendis",
           time: "Dec 2025 – Mar 2026",
@@ -417,6 +560,16 @@ export const content = {
             "Am asistat la sesiuni de training si team-building.",
             "Am ajutat la pregatirea evenimentelor corporate.",
             "Am participat la organizarea mai multor evenimente ale companiei.",
+          ],
+        },
+        {
+          role: "AI Automation Trainee",
+          company: "Ventivo Grup",
+          time: "Sep 2025",
+          bullets: [
+            "Am dezvoltat si testat agenti AI.",
+            "Am integrat tool-uri AI in aplicatii prototip.",
+            "Am experimentat cu platforme de automatizare AI.",
           ],
         },
         {
@@ -434,13 +587,13 @@ export const content = {
     education: {
       eyebrow: "Educatie",
       title: "Parcurs academic",
-      lead:
-        "Formare tehnica in sisteme sustinuta de o baza solida in matematica si informatica.",
+      lead: "Formare tehnica in sisteme sustinuta de o baza solida in matematica si informatica.",
       label: "Educatie",
       items: [
         {
           school: "Universitatea Politehnica din Bucuresti",
-          program: "Facultatea de Automatica si Calculatoare • Master e-Guvernare (e-GOV)",
+          program:
+            "Facultatea de Automatica si Calculatoare • Master e-Guvernare (e-GOV)",
           time: "2026 – 2028",
           detail: "Studii de master",
           status: "In desfasurare",
@@ -448,7 +601,8 @@ export const content = {
         },
         {
           school: "Universitatea Politehnica din Bucuresti",
-          program: "Facultatea de Automatica si Calculatoare • Licenta in Ingineria Sistemelor",
+          program:
+            "Facultatea de Automatica si Calculatoare • Licenta in Ingineria Sistemelor",
           time: "2022 – 2026",
           detail: "Studii de licenta",
           status: "Absolvit",
@@ -457,23 +611,44 @@ export const content = {
     },
     skills: {
       eyebrow: "Skill-uri",
-      title: "Competente tehnice si puncte forte profesionale",
-      lead:
-        "O privire structurata asupra tehnologiilor, fundamentelor inginereesti si abilitatilor de colaborare pe care le folosesc pentru a construi software fiabil si pentru a contribui eficient in echipa.",
+      title: "Competențe tehnice",
+      lead: "O privire structurata asupra tehnologiilor, fundamentelor inginereesti si abilitatilor de colaborare pe care le folosesc pentru a construi software fiabil si pentru a contribui eficient in echipa.",
       core: "Capabilitati de baza",
       languagesTitle: "Limbi",
       groups: [
         {
           title: "SAP & Analiza",
-          items: ["SAP Business Data Cloud", "SAP Datasphere", "SAP Analytics Cloud (SAC)", "SAP BW/4HANA", "Power BI", "Excel"],
+          items: [
+            "SAP Business Data Cloud",
+            "SAP Datasphere",
+            "SAP Analytics Cloud (SAC)",
+            "SAP BW/4HANA",
+            "Power BI",
+            "Excel",
+          ],
         },
         {
           title: "Dezvoltare",
-          items: ["Python", "SQL", "Java", "C++", "JavaScript", "React", "Node.js", "Spring Boot"],
+          items: [
+            "Python",
+            "SQL",
+            "Java",
+            "C++",
+            "JavaScript",
+            "React",
+            "Node.js",
+            "Spring Boot",
+          ],
         },
         {
           title: "AI & Tool-uri",
-          items: ["Agenti AI & Automatizare", "OpenAI API", "Machine Learning", "Git", "GitHub"],
+          items: [
+            "Agenti AI & Automatizare",
+            "OpenAI API",
+            "Machine Learning",
+            "Git",
+            "GitHub",
+          ],
         },
       ],
       languages: [
@@ -485,8 +660,10 @@ export const content = {
     contact: {
       eyebrow: "Contact",
       title: "Hai sa vorbim",
-      lead:
-        "Cea mai rapida metoda de contact este emailul sau LinkedIn. GitHub este locul potrivit pentru a vedea codul si istoricul proiectelor.",
+      lead: "Cea mai rapida metoda de contact este emailul sau LinkedIn. GitHub este locul potrivit pentru a vedea codul si istoricul proiectelor.",
+      copyEmail: "Copiază adresa de email",
+      copied: "Email copiat",
+      copyError: "Selectează adresa de email pentru a o copia.",
       phone: "Telefon",
       email: "Email",
       github: "GitHub",
