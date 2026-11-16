@@ -40,7 +40,7 @@ export default function Home({ text, nav, projects }) {
                 <DownloadIcon /> {nav.downloadCv}{" "}
                 <span className="cvTag">PDF</span>
               </a>
-              <Link className="btn ghost" to="/contact">
+              <Link className="btn ghost" to="/contact" viewTransition>
                 {text.ctaContact} <ArrowRight />
               </Link>
             </div>
@@ -64,7 +64,7 @@ export default function Home({ text, nav, projects }) {
                 <li key={tool}>{tool}</li>
               ))}
             </ul>
-            <Link className="textLink" to="/experience">
+            <Link className="textLink" to="/experience" viewTransition>
               {text.ctaExperience} <ArrowRight />
             </Link>
           </aside>
@@ -79,15 +79,15 @@ export default function Home({ text, nav, projects }) {
           <h2 id="about-title" className="sectionTitle">
             {nav.about}
           </h2>
-          <div className="aboutCopy" data-reveal="section">
-            <div className="aboutBody">
+          <div className="aboutCopy">
+            <div className="aboutBody" data-reveal="section">
               {text.paragraphs.slice(1).map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
             <dl className="capabilityList">
               {text.summary.map((item) => (
-                <div key={item.title}>
+                <div key={item.title} data-reveal="item">
                   <dt>{item.title}</dt>
                   <dd>{item.text}</dd>
                 </div>
@@ -106,20 +106,17 @@ export default function Home({ text, nav, projects }) {
             <h2 id="work-title" className="sectionTitle">
               {text.selectedProjects}
             </h2>
-            <Link className="textLink" to="/projects">
+            <Link className="textLink" to="/projects" viewTransition>
               {text.ctaProjects} <ArrowRight />
             </Link>
           </div>
           <ul className="workGrid">
-            {selectedProjects.map((project, index) => (
-              <li
-                key={project.title}
-                data-reveal="project"
-                data-reveal-delay={index * 60}
-              >
+            {selectedProjects.map((project) => (
+              <li key={project.title} data-reveal="project">
                 <Link
                   className="workCard"
                   to={`/projects#${projectId(project)}`}
+                  viewTransition
                 >
                   <div className="workMedia">
                     <img

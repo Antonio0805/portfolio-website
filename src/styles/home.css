@@ -1,5 +1,41 @@
 .profile {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding-block: clamp(44px, 6vw, 88px) clamp(48px, 6vw, 80px);
+}
+/* A faint drafting grid and a soft teal glow behind the introduction. */
+.profile::before,
+.profile::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.profile::before {
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.35;
+  mask-image: radial-gradient(
+    ellipse 70% 65% at 72% 40%,
+    #000 0%,
+    transparent 75%
+  );
+}
+.profile::after {
+  top: -12%;
+  right: -8%;
+  width: min(760px, 70vw);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--c-teal) 45%, transparent) 0%,
+    transparent 65%
+  );
+  opacity: 0.6;
 }
 .profileGrid {
   display: grid;
@@ -208,5 +244,22 @@
 @media (max-width: 599px) {
   .profileFocus {
     padding: 22px;
+  }
+}
+@media (max-width: 700px) {
+  .profile::before {
+    background-size: 64px 64px;
+    opacity: 0.22;
+    mask-image: radial-gradient(
+      ellipse 95% 45% at 50% 25%,
+      #000 0%,
+      transparent 80%
+    );
+  }
+  .profile::after {
+    top: -6%;
+    right: -35%;
+    width: 115vw;
+    opacity: 0.45;
   }
 }

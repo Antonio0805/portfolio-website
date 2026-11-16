@@ -15,7 +15,7 @@ export default function Skills({ text }) {
           </h2>
           <dl className="skillGroups">
             {text.groups.map((group) => (
-              <div key={group.title} className="skillGroup">
+              <div key={group.title} className="skillGroup" data-reveal="item">
                 <dt className="skillGroupTitle">{group.title}</dt>
                 <dd>
                   <ul className="toolList">
@@ -40,7 +40,7 @@ export default function Skills({ text }) {
           </h2>
           <dl className="langList">
             {text.languages.map((language) => (
-              <div className="langRow" key={language.name}>
+              <div className="langRow" key={language.name} data-reveal="item">
                 <dt>{language.name}</dt>
                 <dd>{language.level}</dd>
               </div>

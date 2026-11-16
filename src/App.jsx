@@ -6,6 +6,7 @@ import "./styles/pages.css";
 import "./styles/motion.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useLayoutEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import Navbar from "./components/ Navbar";
 import Footer from "./components/Footer";
 import { content } from "./content";
@@ -39,6 +40,22 @@ export default function App() {
   }, [language]);
 
   const texts = content[language];
+
+  // The two languages cross-fade where the browser supports view transitions;
+  // `data-vt` lets the CSS use a plain fade instead of the page-change rise.
+  const switchLanguage = (next) => {
+    if (next === language) return;
+    if (!document.startViewTransition) {
+      setLanguage(next);
+      return;
+    }
+    const root = document.documentElement;
+    root.dataset.vt = "language";
+    const transition = document.startViewTransition(() =>
+      flushSync(() => setLanguage(next)),
+    );
+    transition.finished.finally(() => delete root.dataset.vt);
+  };
 
   useLayoutEffect(() => {
     const target =
@@ -75,7 +92,7 @@ export default function App() {
       </a>
       <Navbar
         language={language}
-        setLanguage={setLanguage}
+        setLanguage={switchLanguage}
         navText={texts.nav}
       />
 

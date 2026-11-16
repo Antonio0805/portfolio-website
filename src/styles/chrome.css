@@ -44,6 +44,7 @@
   gap: 2px;
 }
 .navLink {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -55,9 +56,13 @@
 }
 .navLink.active {
   color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 9px;
-  text-decoration-thickness: 2px;
+}
+.navIndicator {
+  position: absolute;
+  inset: auto 10px 6px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
 }
 .navActions {
   display: flex;

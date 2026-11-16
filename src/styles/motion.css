@@ -12,12 +12,38 @@
     animation: ink-arrive 460ms var(--ease-arrive) 70ms backwards;
   }
 
+  .profileSummary {
+    animation: rise-arrive 520ms var(--ease-arrive) 140ms backwards;
+  }
+
+  .profileCopy .ctaRow {
+    animation: rise-arrive 520ms var(--ease-arrive) 200ms backwards;
+  }
+
+  .profileLinks {
+    animation: rise-arrive 520ms var(--ease-arrive) 260ms backwards;
+  }
+
   .profileFocus {
     animation: focus-arrive 560ms var(--ease-arrive) 120ms backwards;
   }
 
+  /* The glow behind the hero drifts slowly; phones keep it still. */
+  .profile::after {
+    animation: hero-drift 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
   .pageTitle {
-    animation: ink-arrive 320ms var(--ease-arrive) backwards;
+    animation: title-rise 640ms var(--ease-arrive) backwards;
+  }
+
+  .pageTitle::after {
+    animation: rule-draw 560ms var(--ease-arrive) 220ms backwards;
+  }
+
+  .pageLead {
+    animation: rise-arrive 520ms var(--ease-arrive) 120ms backwards;
   }
 
   .btn {
@@ -40,7 +66,10 @@
   }
 
   .workMedia {
-    transition: border-color 200ms ease;
+    transition:
+      border-color 200ms ease,
+      transform 320ms var(--ease-arrive),
+      box-shadow 320ms ease;
   }
 
   .workMedia img {
@@ -52,15 +81,10 @@
   }
 
   .navLink {
-    position: relative;
     transition: color 150ms ease;
   }
 
-  .navLink.active {
-    text-decoration: none;
-  }
-
-  .navLink::after {
+  .navLink:not(.active)::after {
     content: "";
     position: absolute;
     inset: auto 10px 6px;
@@ -69,10 +93,6 @@
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 220ms var(--ease-arrive);
-  }
-
-  .navLink.active::after {
-    transform: scaleX(1);
   }
 
   .langBtn,
@@ -90,6 +110,30 @@
 
   .menu:not([hidden]) {
     animation: menu-arrive 200ms var(--ease-arrive);
+  }
+
+  .menu:not([hidden]) nav a {
+    animation: rise-arrive 280ms var(--ease-arrive) backwards;
+  }
+
+  .menu:not([hidden]) nav a:nth-child(2) {
+    animation-delay: 30ms;
+  }
+
+  .menu:not([hidden]) nav a:nth-child(3) {
+    animation-delay: 60ms;
+  }
+
+  .menu:not([hidden]) nav a:nth-child(4) {
+    animation-delay: 90ms;
+  }
+
+  .menu:not([hidden]) nav a:nth-child(5) {
+    animation-delay: 120ms;
+  }
+
+  .menu:not([hidden]) nav a:nth-child(n + 6) {
+    animation-delay: 150ms;
   }
 
   .contactCopy[data-copied="true"] path {
@@ -130,6 +174,47 @@
 
     .navLink:hover::after {
       transform: scaleX(1);
+    }
+
+    .workCard:hover .workMedia {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgb(16 24 32 / 0.1);
+    }
+
+    .brandMark {
+      transition:
+        border-color 150ms ease,
+        color 150ms ease;
+    }
+
+    .brandBlock:hover .brandMark {
+      border-color: var(--accent);
+    }
+  }
+
+  /* Touch screens: a short press instead of hover, and no grey tap flash. */
+  @media (hover: none) {
+    .workCard,
+    .btn,
+    .textLink,
+    .footerCta,
+    .menu nav a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .workMedia {
+      transition: transform 120ms var(--ease-arrive);
+    }
+
+    .workCard:active .workMedia {
+      transform: scale(0.985);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .profile::after {
+      animation: none;
+      will-change: auto;
     }
   }
 }
@@ -186,5 +271,166 @@
   }
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+/* Page changes. The header stays put while the page underneath fades out and
+   the new one rises in; the active underline slides to its new link. */
+.nav {
+  view-transition-name: site-nav;
+}
+
+.navIndicator {
+  view-transition-name: nav-indicator;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vt-fade-out 160ms ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-rise-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  ::view-transition-group(nav-indicator) {
+    animation-duration: 380ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Switching language is the same page, so it only cross-fades. */
+  html[data-vt="language"]::view-transition-old(root) {
+    animation: vt-fade-out 220ms ease both;
+  }
+
+  html[data-vt="language"]::view-transition-new(root) {
+    animation: vt-fade-in 220ms ease both;
+  }
+
+  /* On phones a tap should feel instant: shorter, with less travel. */
+  @media (max-width: 700px) {
+    ::view-transition-old(root) {
+      animation-duration: 120ms;
+    }
+
+    html:not([data-vt="language"])::view-transition-new(root) {
+      animation: vt-rise-in-short 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+  }
+
+  /* Reading progress along the foot of the header, and a soft shadow once
+     the page has scrolled. Both follow the scroll position directly. */
+  @supports (animation-timeline: scroll()) {
+    .nav::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      box-shadow: 0 6px 18px rgb(16 24 32 / 0.18);
+      opacity: 0;
+      pointer-events: none;
+      animation: fade-in linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 40px;
+    }
+
+    .nav::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      pointer-events: none;
+      animation: rule-draw linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+@keyframes rise-arrive {
+  from {
+    opacity: 0.5;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes title-rise {
+  from {
+    opacity: 0.2;
+    transform: translateY(0.3em);
+    clip-path: inset(0 0 0.3em 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-6%, 5%, 0) scale(1.08);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes vt-rise-in-short {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }

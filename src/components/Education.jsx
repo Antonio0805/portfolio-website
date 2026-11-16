@@ -28,7 +28,7 @@ export default function Education({ text }) {
         <div className="wrap">
           {text.items.map((item, index) => (
             <article className="eduItem" key={item.school + item.time}>
-              <div className="eduDetails">
+              <div className="eduDetails" data-reveal="item">
                 <div className="eduMeta">
                   <span className="eduYears">{item.time}</span>
                   {item.status ? (

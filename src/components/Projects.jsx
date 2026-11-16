@@ -60,7 +60,7 @@ export default function Projects({ text }) {
           aria-labelledby="featured-title"
         >
           <div className="wrap featuredGrid">
-            <figure className="featuredMedia">
+            <figure className="featuredMedia" data-reveal="photo">
               <img
                 {...imageSources(projectImage(featured))}
                 sizes="(min-width: 1280px) 600px, (min-width: 900px) 50vw, 92vw"
@@ -99,6 +99,7 @@ export default function Projects({ text }) {
                 className={`projectRow${!image ? " withoutMedia" : ""}`}
                 key={project.title}
                 id={projectId(project)}
+                data-reveal="item"
               >
                 {project.showcaseImages ? (
                   <div className="projectGallery">

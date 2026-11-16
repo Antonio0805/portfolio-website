@@ -85,6 +85,7 @@ export default function Navbar({ language, setLanguage, navText }) {
           className="brandBlock"
           aria-label="Antonio Smărăndescu, home"
           onClick={close}
+          viewTransition
         >
           <span className="brandMark" aria-hidden="true">
             AS
@@ -93,8 +94,22 @@ export default function Navbar({ language, setLanguage, navText }) {
         </NavLink>
         <nav className="links desktopOnly" aria-label={navText.navigation}>
           {NAV_ITEMS.map(({ to, key }) => (
-            <NavLink key={to} to={to} end={to === "/"} className="navLink">
-              {navText[key]}
+            <NavLink
+              key={to}
+              to={to}
+              end={to === "/"}
+              className="navLink"
+              viewTransition
+            >
+              {({ isActive }) => (
+                <>
+                  {navText[key]}
+                  {/* One named element, so the underline slides between pages. */}
+                  {isActive ? (
+                    <span className="navIndicator" aria-hidden="true" />
+                  ) : null}
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -145,7 +160,13 @@ export default function Navbar({ language, setLanguage, navText }) {
         <div className="wrap menuInner">
           <nav aria-label={navText.navigation}>
             {NAV_ITEMS.map(({ to, key }) => (
-              <NavLink key={to} to={to} end={to === "/"} onClick={close}>
+              <NavLink
+                key={to}
+                to={to}
+                end={to === "/"}
+                onClick={close}
+                viewTransition
+              >
                 {navText[key]}
               </NavLink>
             ))}

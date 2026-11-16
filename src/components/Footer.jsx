@@ -9,7 +9,7 @@ export default function Footer({ nav, cta, showCta = true }) {
         <div className="footerTop">
           <div>
             {showCta ? (
-              <Link className="footerCta" to="/contact">
+              <Link className="footerCta" to="/contact" viewTransition>
                 {cta} <ArrowUpRight />
               </Link>
             ) : (

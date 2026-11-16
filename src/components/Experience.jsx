@@ -11,7 +11,11 @@ export default function Experience({ text }) {
       >
         <ol className="wrap experienceList">
           {text.items.map((item) => (
-            <li className="expItem" key={item.role + item.company}>
+            <li
+              className="expItem"
+              key={item.role + item.company}
+              data-reveal="item"
+            >
               <div className="expMeta">
                 <p>{item.time}</p>
                 {item.status ? (
